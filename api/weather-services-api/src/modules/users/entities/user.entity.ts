@@ -40,6 +40,11 @@ export class User extends Model {
   })
   updated_at?: Date;
 
+  @Column({
+    type: DataType.DATE,
+  })
+  archived?: Date;
+
   @BeforeValidate
   static addPrefixToId(instance: User) {
     if (!instance.id) {
