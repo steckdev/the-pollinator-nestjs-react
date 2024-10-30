@@ -1,0 +1,33 @@
+TOOLS:
+Install pnpm
+`curl -fsSL https://get.pnpm.io/install.sh | sh -`
+
+
+CLIENT SECTION
+Tools:
+
+Packages:
+npm install @mui/material @emotion/react @emotion/styled
+
+
+Generator Scripts used:
+npx create-react-app pollinator-app --template typescript
+
+
+
+
+
+API SECTION
+Tools:
+`npm i -g @nestjs/cli`
+
+
+Generator scripts used:
+`nest new weather-services-api`
+
+
+
+
+
+
+
