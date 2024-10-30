@@ -1,28 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Button from '@mui/material/Button';
+import watercolor from "./assets/watercolor-image.png";
+import "./App.css";
+import Button from "@mui/material/Button";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <div>
-          <Button variant="contained">Hello World</Button>
-      </div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>The Pollinator</h1>
       </header>
+      <body className="App-body">
+        <div>
+          <h2 className="title-weather-data">Weather Data</h2>
+          <div className="weather-data">
+            <h3 className="location">Location </h3>
+            <h3 className="calendar">Calendar</h3>
+          </div>
+          <Button variant="contained">Fetch Weather Data</Button>
+          <img src={watercolor} className="App-logo" alt="logo" />
+        </div>
+      </body>
     </div>
   );
 }
