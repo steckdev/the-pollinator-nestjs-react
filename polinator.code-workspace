@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "name": "pollinator-app",
+      "path": "client/pollinator-app"
+    },
+    {
+      "name": "weather-services-api",
+      "path": "api/weather-services-api"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["the-pollinator-nextjs-react"]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "request": {
+    "type": "Zipcode",
+    "query": "84005",
+    "language": "en",
+    "unit": "f"
+  },
+  "location": {
+    "name": "Eagle Mountain",
+    "country": "USA",
+    "region": "Utah",
+    "lat": "40.380",
+    "lon": "-111.991",
+    "timezone_id": "America/Denver",
+    "localtime": "2024-10-30 21:16",
+    "localtime_epoch": 1730322960,
+    "utc_offset": "-6.0"
+  },
+  "current": {
+    "observation_time": "03:16 AM",
+    "temperature": 28,
+    "weather_code": 113,
+    "weather_icons": [
+      "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0008_clear_sky_night.png"
+    ],
+    "weather_descriptions": ["Clear "],
+    "wind_speed": 5,
+    "wind_degree": 156,
+    "wind_dir": "SSE",
+    "pressure": 1023,
+    "precip": 0,
+    "humidity": 75,
+    "cloudcover": 0,
+    "feelslike": 23,
+    "uv_index": 0,
+    "visibility": 6,
+    "is_day": "no"
+  }
+}
