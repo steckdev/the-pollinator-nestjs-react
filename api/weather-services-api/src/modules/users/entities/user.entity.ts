@@ -9,7 +9,9 @@ import {
 } from 'sequelize-typescript';
 import { v4 as uuidv4 } from 'uuid';
 
-@Table
+@Table({
+  tableName: 'user',
+})
 export class User extends Model {
   @Column({
     type: DataType.STRING,

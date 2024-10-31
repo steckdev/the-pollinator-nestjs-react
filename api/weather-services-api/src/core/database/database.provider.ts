@@ -15,7 +15,6 @@ export const databaseProviders = [
         database: process.env.DB_NAME,
       });
       sequelize.addModels([User]);
-      await sequelize.sync();
       return sequelize;
     },
   },

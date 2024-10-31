@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 client/pollinator-app/build
+
+.DS_Store
