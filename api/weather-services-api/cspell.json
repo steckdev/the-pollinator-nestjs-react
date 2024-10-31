@@ -1,0 +1,11 @@
+{
+  "ignorePaths": [
+    "coverage",
+    "pnpm-lock.yaml",
+    "*.svg",
+    "README.md",
+    "src/packages/generated-clients/*"
+  ],
+  "ignoreRegExpList": ["//.*", "/\\*[^]*?\\*/"],
+  "words": ["localtime", "uuidv", "weatherstack", "dtos"]
+}
