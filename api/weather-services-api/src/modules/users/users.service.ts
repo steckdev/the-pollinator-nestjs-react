@@ -39,8 +39,8 @@ function buildUserDto(user: User): UserDto {
     email: user.email,
     zip: user.zip,
     name: user.name,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at,
     archived: user.archived,
   };
 }

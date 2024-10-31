@@ -18,8 +18,8 @@ describe('UsersController', () => {
     name: testUser.name,
     email: testUser.email,
     zip: testUser.zip,
-    createdAt: testUser.createdAt,
-    updatedAt: testUser.updatedAt,
+    createdAt: testUser.created_at,
+    updatedAt: testUser.updated_at,
     archived: testUser.archived,
   };
 
