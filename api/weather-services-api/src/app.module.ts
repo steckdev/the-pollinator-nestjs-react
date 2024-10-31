@@ -7,6 +7,7 @@ import { DatabaseModule } from './core/database/database.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/cache-manager';
 import { HttpModule } from '@nestjs/axios';
+import { WeatherModule } from './modules/weather/weather.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { HttpModule } from '@nestjs/axios';
     HttpModule,
     DatabaseModule,
     UsersModule,
+    WeatherModule,
   ],
   controllers: [AppController],
   providers: [AppService],

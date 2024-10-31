@@ -1,9 +1,6 @@
 {
   "folders": [
     {
-      "path": "."
-    },
-    {
       "name": "pollinator-app",
       "path": "client/pollinator-app"
     },
