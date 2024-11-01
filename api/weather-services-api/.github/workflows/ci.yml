@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'
+
+    - name: Navigate to api/weather-services-api directory
+      run: cd api/weather-services-api
+
+    - name: Install pnpm
+      run: npm install -g pnpm
+
+    - name: Install package dependencies
+      run: pnpm install
+
+    - name: Run api tests
+      run: pnpm test
