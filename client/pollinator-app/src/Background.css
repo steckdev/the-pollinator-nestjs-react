@@ -1,0 +1,19 @@
+.background-image {
+    position: absolute;
+    width: 400px;
+    height: auto;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .top-right {
+    top: 0;
+    right: 0;
+    transform: rotate(180deg);
+  }
+  
+  .bottom-left {
+    bottom: 0;
+    left: 0;
+  }

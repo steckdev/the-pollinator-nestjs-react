@@ -1,94 +1,86 @@
+// `/src/App.tsx`
 import { Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import React, { useState } from "react";
 import WeatherData from "./components/WeatherData";
-import { weatherServiceApi } from "./api/weatherServiceApi";
+import { useUser } from "./context/UserContext";
+import watercolor from "./assets/watercolor-image.png"; // Import the background image
+import "./App.css";
+import "./Background.css";
 
 function App() {
-  const [name, setName] = useState("");
-  const [zip, setZip] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-
-  useEffect(() => {
-    if (cookies.user) {
-      setName(cookies.user.name);
-      setZip(cookies.user.zip);
-    }
-  }, [cookies]);
-
-  const saveUser = async () => {
-    try {
-      const response = await weatherServiceApi.createUser({ name, zip });
-      setCookie("user", { id: response.id, name, zip }, { path: "/" });
-    } catch (error) {
-      console.error("Error saving user data:", error);
-    }
-  };
-
-  useEffect(() => {
-    const loadUser = async (id: string) => {
-      try {
-        const response = await weatherServiceApi.getUserById(id);
-        setName(response.name);
-        setZip(response.zip);
-      } catch (error) {
-        console.error("Error loading user data:", error);
-      }
-    };
-
-    if (cookies.user && cookies.user.id) {
-      loadUser(cookies.user.id);
-    }
-  }, [cookies]);
+  const { name, zip, setName, setZip, saveUser, handleLogout } = useUser();
+  const [isEditing, setIsEditing] = useState<boolean>(!name); // Determine if the user is editing or logged in
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await saveUser();
+    setIsEditing(false);
     window.history.pushState({}, "", `?name=${name}`);
   };
 
-  const handleLogout = () => {
-    removeCookie("user", { path: "/" });
-    setName("");
-    setZip("");
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>The Pollinator</h1>
-      </header>
-      <div className="App-body">
-        {cookies.user ? (
-          <>
-            <p>Welcome, {name}!</p>
-            <p>Your Zip Code: {zip}</p>
-            <Button onClick={handleLogout} variant="contained">
-              Logout
-            </Button>
-          </>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Zip Code"
-              value={zip}
-              onChange={e => setZip(e.target.value)}
-            />
-            <Button type="submit" variant="contained">
-              Save
-            </Button>
-          </form>
-        )}
-        <WeatherData />
+    <>
+      <img
+        src={watercolor}
+        className="background-image top-right"
+        alt="background"
+      />
+      <img
+        src={watercolor}
+        className="background-image bottom-left"
+        alt="background"
+      />
+
+      <div className="App">
+        <header className="App-header">
+          <h1>The Pollinator</h1>
+        </header>
+        <div className="App-body">
+          {isEditing ? (
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={e => {
+                  setName(e.target.value);
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Zip Code"
+                value={zip}
+                onChange={e => {
+                  setZip(e.target.value);
+                }}
+              />
+              <Button type="submit" variant="contained">
+                Save
+              </Button>
+            </form>
+          ) : (
+            <>
+              <p>Welcome, {name}!</p>
+              <p>Your Zip Code: {zip}</p>
+              <Button
+                onClick={() => {
+                  handleLogout();
+                  setIsEditing(true);
+                }}
+                variant="contained"
+                type="button"
+              >
+                Logout
+              </Button>
+            </>
+          )}
+
+          <div className="divider"></div>
+
+          <WeatherData />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
