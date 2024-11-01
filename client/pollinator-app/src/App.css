@@ -1,62 +1,78 @@
-.App {
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
   text-align: center;
-}
-
-.App-logo {
-  position:absolute;
-  bottom: 5vmin;
-  left: 5vmin;
-  height: 50vmin;
-  pointer-events: none;
-}
-.title {
-  font-size: 2em;
-  margin: 0.25em;
-}
-
-.weather-data {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  min-height: 700px;
+  position: relative;
 }
 
-.location {
-  flex: 1;
-  padding: 2em;
-}
-
-.calendar {
-  flex: 1;
-  padding: 2em;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 20vh;
+.App {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} 
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px #cccccc;
+  max-width: 600px;
+  width: 90%;
+  z-index: 1;
+  position: relative;
+}
 
-.title-weather-data{
-  margin:0;
+.App-header {
+  color: #0ca000;
+  margin-bottom: 10px;
+}
+
+.App-header h1 {
+  font-size: 3rem;
+  margin: 0;
 }
 
 .App-body {
-  background-color: #282c34;
-  min-height: 80vh;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-
-.App-link {
-  color: #61dafb;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+
+button {
+  margin-top: 10px;
+  background-color: #0070ff;
+  font-size: 1rem;
+  border-radius: 4px;
+  left: 10px;
+}
+
+button:hover {
+  background-color: #0050b3;
+}
+
+.divider {
+  border-bottom: 2px solid;
+  width: 80%;
+  margin: 20px;
+}
+

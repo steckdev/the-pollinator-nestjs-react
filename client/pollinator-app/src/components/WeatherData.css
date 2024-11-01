@@ -1,0 +1,37 @@
+.weather-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .weather-data img {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .weather-data-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+  }
+  
+  .weather-data-info p {
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .weather-data-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #3c763d;
+  }
+  
+  .weather-data .fetch-button {
+    margin-top: 20px;
+  }
+  
