@@ -15,6 +15,11 @@ The Pollinator App is designed to help guide the care of plants, making plant ca
   - **Weather**: Fetches weather info via Weatherstack API (get requests) based on user zip.
   - **Plant**: Tracks plant care details (get, patch, post for plant data).
 
+## App Design
+
+![App Design Overview](./overview.png)
+
+
 ## Mermaid Diagram
 
 ```mermaid
