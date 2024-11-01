@@ -21,14 +21,13 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Navigate to api/weather-services-api directory
-      run: cd api/weather-services-api
-
     - name: Install pnpm
       run: npm install -g pnpm
 
     - name: Install package dependencies
       run: pnpm install
+      working-directory: api/weather-services-api
 
     - name: Run api tests
       run: pnpm test
+      working-directory: api/weather-services-api
