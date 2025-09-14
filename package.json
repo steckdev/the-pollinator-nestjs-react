@@ -1,0 +1,18 @@
+{
+  "name": "the-pollinator-nestjs-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write '**/*.{js,ts,tsx,html,md}'",
+    "presentation": "marp presentation/slides.md -o presentation/slides.html",
+    "presentation:dev": "nodemon --watch 'presentation/**' --ext 'md' --exec 'marp --no-stdin presentation/slides.md -o presentation/slides.html'",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.1.2",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "husky": "^8.0.0"
+  }
+}

@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pollinator - NestJS Architecture Evolution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header .plant-icon {
+            font-size: 1.2em;
+        }
+
+        .evolution-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .content-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-height: 600px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .stage-title {
+            font-size: 1.8em;
+            color: #667eea;
+        }
+
+        .stage-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .module-section {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .module-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .module-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .module-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .module-item.new {
+            border-left-color: #f5576c;
+            background: linear-gradient(to right, rgba(245, 87, 108, 0.1), white);
+        }
+
+        .module-item.enhanced {
+            border-left-color: #f093fb;
+            background: linear-gradient(to right, rgba(240, 147, 251, 0.1), white);
+        }
+
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-keyword {
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        .code-string {
+            color: #84cc16;
+        }
+
+        .code-decorator {
+            color: #a78bfa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .principle-showcase {
+            background: #f0f4f8;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .principle-title {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metrics-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            width: calc(50% - 30px);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .icon {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="plant-icon">🌻</span>
+                The Pollinator: NestJS Architecture Evolution
+                <span class="plant-icon">🌱</span>
+            </h1>
+            <p>Transform a simple plant care app into an enterprise platform</p>
+        </div>
+
+        <div class="evolution-tabs">
+            <button class="tab-btn active" onclick="showStage('current')">📍 Current State</button>
+            <button class="tab-btn" onclick="showStage('prototype')">🚀 Enhanced Prototype</button>
+            <button class="tab-btn" onclick="showStage('product')">📦 Product Evolution</button>
+            <button class="tab-btn" onclick="showStage('platform')">🏢 Platform Scale</button>
+            <button class="tab-btn" onclick="showStage('principles')">🎯 Core Principles</button>
+        </div>
+
+        <div class="content-area" id="content">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const stages = {
+            current: {
+                title: 'Current Pollinator Architecture',
+                badge: 'Starting Point',
+                content: `
+                    <div class="architecture-grid">
+                        <div class="module-section">
+                            <h3><span class="icon">📦</span> Existing Modules</h3>
+                            <div class="module-list">
+                                <div class="module-item">
+                                    <strong>User Module</strong>
+                                    <div>Simple profile management (get, post)</div>
+                                </div>
+                                <div class="module-item">
+                                    <strong>Weather Module</strong>
+                                    <div>Weatherstack API integration</div>
+                                </div>
+                                <div class="module-item">
+                                    <strong>Plant Module</strong>
+                                    <div>Plant care tracking (CRUD operations)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-section">
+                            <h3><span class="icon">🔧</span> Current Stack</h3>
+                            <div class="module-list">
+                                <div class="module-item">
+                                    <strong>Frontend:</strong> React App
+                                </div>
+                                <div class="module-item">
+                                    <strong>Backend:</strong> NestJS API
+                                </div>
+                                <div class="module-item">
+                                    <strong>Cache:</strong> Redis
+                                </div>
+                                <div class="module-item">
+                                    <strong>Database:</strong> PostgreSQL
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">🎯</span> What We Have</h3>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>✅ Basic modular structure with 3 core modules</li>
+                            <li>✅ Weather data caching with Redis</li>
+                            <li>✅ Simple REST API endpoints</li>
+                            <li>✅ User-Plant-Weather relationship</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-example">
+<span class="code-comment">// Current Plant Module Structure</span>
+<span class="code-decorator">@Module</span>({
+  imports: [TypeOrmModule.forFeature([Plant])],
+  controllers: [PlantController],
+  providers: [PlantService],
+})
+<span class="code-keyword">export class</span> PlantModule {}
+
+<span class="code-comment">// Simple service without advanced patterns</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantService {
+  <span class="code-keyword">constructor</span>(
+    <span class="code-decorator">@InjectRepository</span>(Plant)
+    <span class="code-keyword">private</span> plantRepository: Repository&lt;Plant&gt;,
+  ) {}
+  
+  findAll() {
+    <span class="code-keyword">return</span> <span class="code-keyword">this</span>.plantRepository.find();
+  }
+}
+                    </div>
+
+                    <div class="metrics-bar">
+                        <div class="metric">
+                            <div class="metric-value">3</div>
+                            <div class="metric-label">Core Modules</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">Basic</div>
+                            <div class="metric-label">Architecture</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">MVP</div>
+                            <div class="metric-label">Stage</div>
+                        </div>
+                    </div>
+                `
+            },
+            prototype: {
+                title: 'Enhanced Prototype - Better Foundation',
+                badge: 'Level 1 Enhancement',
+                content: `
+                    <div class="architecture-grid">
+                        <div class="module-section">
+                            <h3><span class="icon">🔄</span> Enhanced Modules</h3>
+                            <div class="module-list">
+                                <div class="module-item enhanced">
+                                    <strong>Auth Module</strong>
+                                    <div>JWT authentication + Guards</div>
+                                </div>
+                                <div class="module-item enhanced">
+                                    <strong>Weather Module++</strong>
+                                    <div>Multiple providers + fallback</div>
+                                </div>
+                                <div class="module-item enhanced">
+                                    <strong>Plant Module++</strong>
+                                    <div>Care schedules + Smart reminders</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Notification Module</strong>
+                                    <div>Email/Push for care reminders</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-section">
+                            <h3><span class="icon">🛡️</span> NestJS Patterns Added</h3>
+                            <div class="module-list">
+                                <div class="module-item new">
+                                    <strong>Guards</strong>
+                                    <div>Authentication & Rate limiting</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Interceptors</strong>
+                                    <div>Logging & Response transformation</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Pipes</strong>
+                                    <div>Validation & Data transformation</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Exception Filters</strong>
+                                    <div>Global error handling</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+<span class="code-comment">// Enhanced with Guards and Interceptors</span>
+<span class="code-decorator">@Controller</span>(<span class="code-string">'plants'</span>)
+<span class="code-decorator">@UseGuards</span>(JwtAuthGuard, RateLimitGuard)
+<span class="code-decorator">@UseInterceptors</span>(LoggingInterceptor, CacheInterceptor)
+<span class="code-keyword">export class</span> PlantController {
+  
+  <span class="code-decorator">@Get</span>()
+  <span class="code-decorator">@CacheKey</span>(<span class="code-string">'user-plants'</span>)
+  <span class="code-decorator">@CacheTTL</span>(300)
+  findAll(<span class="code-decorator">@User</span>() user: UserEntity) {
+    <span class="code-keyword">return this</span>.plantService.findByUser(user.id);
+  }
+
+  <span class="code-decorator">@Post</span>()
+  <span class="code-decorator">@UsePipes</span>(ValidationPipe)
+  create(<span class="code-decorator">@Body</span>() createPlantDto: CreatePlantDto) {
+    <span class="code-keyword">return this</span>.plantService.create(createPlantDto);
+  }
+}
+
+<span class="code-comment">// Smart Weather Service with Circuit Breaker</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> WeatherService {
+  <span class="code-keyword">constructor</span>(
+    <span class="code-keyword">private</span> httpService: HttpService,
+    <span class="code-keyword">private</span> cacheManager: Cache,
+  ) {}
+
+  <span class="code-decorator">@CircuitBreaker</span>({ threshold: 5, timeout: 60000 })
+  <span class="code-keyword">async</span> getWeatherData(zipCode: string) {
+    <span class="code-comment">// Try primary provider</span>
+    <span class="code-keyword">try</span> {
+      <span class="code-keyword">return await this</span>.fetchFromWeatherstack(zipCode);
+    } <span class="code-keyword">catch</span> (error) {
+      <span class="code-comment">// Fallback to secondary provider</span>
+      <span class="code-keyword">return await this</span>.fetchFromOpenWeather(zipCode);
+    }
+  }
+}
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">💡</span> Key Improvements</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <strong>🔐 Security First</strong>
+                                <div>JWT + Guards protect all routes</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>⚡ Performance</strong>
+                                <div>Smart caching with decorators</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>🛡️ Resilience</strong>
+                                <div>Circuit breakers & fallbacks</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>📊 Observability</strong>
+                                <div>Logging & monitoring built-in</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metrics-bar">
+                        <div class="metric">
+                            <div class="metric-value">4+</div>
+                            <div class="metric-label">Modules</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">Guards</div>
+                            <div class="metric-label">Security Layer</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">99.9%</div>
+                            <div class="metric-label">Uptime Target</div>
+                        </div>
+                    </div>
+                `
+            },
+            product: {
+                title: 'Product Stage - Market Ready',
+                badge: 'Level 2 Evolution',
+                content: `
+                    <div class="architecture-grid">
+                        <div class="module-section">
+                            <h3><span class="icon">🚀</span> Product Features</h3>
+                            <div class="module-list">
+                                <div class="module-item new">
+                                    <strong>Subscription Module</strong>
+                                    <div>Stripe integration for Pro plans</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Community Module</strong>
+                                    <div>Plant sharing & forums</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Analytics Module</strong>
+                                    <div>Plant health tracking & insights</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Image Recognition</strong>
+                                    <div>AI plant identification</div>
+                                </div>
+                                <div class="module-item enhanced">
+                                    <strong>Marketplace Module</strong>
+                                    <div>Buy/sell plants & supplies</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-section">
+                            <h3><span class="icon">⚙️</span> Infrastructure</h3>
+                            <div class="module-list">
+                                <div class="module-item new">
+                                    <strong>Queue Module</strong>
+                                    <div>Bull for background jobs</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>WebSocket Gateway</strong>
+                                    <div>Real-time plant updates</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>File Upload Module</strong>
+                                    <div>S3 for plant photos</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Search Module</strong>
+                                    <div>Elasticsearch integration</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+<span class="code-comment">// Modular Microservice Communication</span>
+<span class="code-decorator">@Module</span>({
+  imports: [
+    ClientsModule.register([
+      {
+        name: <span class="code-string">'PLANT_SERVICE'</span>,
+        transport: Transport.RMQ,
+        options: {
+          urls: [<span class="code-string">'amqp://localhost:5672'</span>],
+          queue: <span class="code-string">'plant_queue'</span>,
+        },
+      },
+    ]),
+    BullModule.registerQueue({
+      name: <span class="code-string">'notification'</span>,
+    }),
+  ],
+})
+<span class="code-keyword">export class</span> AppModule {}
+
+<span class="code-comment">// Event-Driven Plant Care</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantCareService {
+  <span class="code-keyword">constructor</span>(
+    <span class="code-decorator">@InjectQueue</span>(<span class="code-string">'notification'</span>) 
+    <span class="code-keyword">private</span> notificationQueue: Queue,
+    <span class="code-keyword">private</span> eventEmitter: EventEmitter2,
+  ) {}
+
+  <span class="code-decorator">@Cron</span>(<span class="code-string">'0 9 * * *'</span>) <span class="code-comment">// Daily at 9 AM</span>
+  <span class="code-keyword">async</span> checkPlantCare() {
+    <span class="code-keyword">const</span> plants = <span class="code-keyword">await this</span>.findPlantsNeedingCare();
+    
+    <span class="code-keyword">for</span> (<span class="code-keyword">const</span> plant <span class="code-keyword">of</span> plants) {
+      <span class="code-comment">// Queue notification job</span>
+      <span class="code-keyword">await this</span>.notificationQueue.add(<span class="code-string">'care-reminder'</span>, {
+        userId: plant.userId,
+        plantName: plant.name,
+        careType: plant.nextCare,
+      });
+      
+      <span class="code-comment">// Emit event for real-time updates</span>
+      <span class="code-keyword">this</span>.eventEmitter.emit(<span class="code-string">'plant.care.needed'</span>, plant);
+    }
+  }
+}
+
+<span class="code-comment">// WebSocket Gateway for Real-time Updates</span>
+<span class="code-decorator">@WebSocketGateway</span>()
+<span class="code-keyword">export class</span> PlantGateway {
+  <span class="code-decorator">@SubscribeMessage</span>(<span class="code-string">'plant-status'</span>)
+  handlePlantStatus(client: Socket, payload: any) {
+    <span class="code-comment">// Broadcast plant health updates</span>
+    client.broadcast.emit(<span class="code-string">'plant-update'</span>, payload);
+  }
+}
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>Month 1:</strong> Add subscription & payments
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>Month 2:</strong> Launch community features
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>Month 3:</strong> AI plant recognition
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>Month 4:</strong> Marketplace launch
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metrics-bar">
+                        <div class="metric">
+                            <div class="metric-value">10+</div>
+                            <div class="metric-label">Modules</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">Real-time</div>
+                            <div class="metric-label">Updates</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$$$</div>
+                            <div class="metric-label">Revenue Ready</div>
+                        </div>
+                    </div>
+                `
+            },
+            platform: {
+                title: 'Platform Scale - Enterprise Ready',
+                badge: 'Level 3 Platform',
+                content: `
+                    <div class="architecture-grid">
+                        <div class="module-section">
+                            <h3><span class="icon">🏢</span> Enterprise Features</h3>
+                            <div class="module-list">
+                                <div class="module-item new">
+                                    <strong>Multi-Tenant Module</strong>
+                                    <div>B2B for garden centers</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>ML Pipeline Module</strong>
+                                    <div>Disease prediction & care optimization</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>IoT Integration</strong>
+                                    <div>Smart sensors & automation</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>API Gateway</strong>
+                                    <div>Partner integrations & SDK</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Compliance Module</strong>
+                                    <div>GDPR, audit logs, data governance</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-section">
+                            <h3><span class="icon">🔮</span> Microservices</h3>
+                            <div class="module-list">
+                                <div class="module-item new">
+                                    <strong>Plant Service</strong>
+                                    <div>Dedicated plant management</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Weather Service</strong>
+                                    <div>Global weather processing</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Notification Service</strong>
+                                    <div>Multi-channel messaging</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>Analytics Service</strong>
+                                    <div>Big data processing</div>
+                                </div>
+                                <div class="module-item new">
+                                    <strong>ML Service</strong>
+                                    <div>TensorFlow predictions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+<span class="code-comment">// Multi-Tenant Architecture</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> TenantMiddleware <span class="code-keyword">implements</span> NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    <span class="code-keyword">const</span> tenantId = req.headers[<span class="code-string">'x-tenant-id'</span>];
+    RequestContext.setTenantId(tenantId);
+    next();
+  }
+}
+
+<span class="code-comment">// ML Integration for Plant Health</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantHealthMLService {
+  <span class="code-keyword">constructor</span>(
+    <span class="code-decorator">@Inject</span>(<span class="code-string">'ML_SERVICE'</span>) 
+    <span class="code-keyword">private</span> mlClient: ClientProxy,
+    <span class="code-keyword">private</span> tensorflowService: TensorflowService,
+  ) {}
+
+  <span class="code-keyword">async</span> analyzePlantHealth(imageBuffer: Buffer) {
+    <span class="code-comment">// Send to ML microservice</span>
+    <span class="code-keyword">const</span> prediction = <span class="code-keyword">await this</span>.mlClient
+      .send(<span class="code-string">'analyze.plant.health'</span>, { image: imageBuffer })
+      .toPromise();
+
+    <span class="code-comment">// Process with local TensorFlow model</span>
+    <span class="code-keyword">const</span> diseases = <span class="code-keyword">await this</span>.tensorflowService
+      .detectDiseases(imageBuffer);
+
+    <span class="code-keyword">return</span> {
+      health: prediction.healthScore,
+      diseases: diseases,
+      recommendations: <span class="code-keyword">await this</span>.generateCareRecommendations(prediction),
+    };
+  }
+}
+
+<span class="code-comment">// Event Sourcing for Audit Trail</span>
+<span class="code-decorator">@EventsHandler</span>(PlantCreatedEvent)
+<span class="code-keyword">export class</span> PlantCreatedHandler 
+  <span class="code-keyword">implements</span> IEventHandler&lt;PlantCreatedEvent&gt; {
+  
+  handle(event: PlantCreatedEvent) {
+    <span class="code-comment">// Store event for audit</span>
+    <span class="code-keyword">await this</span>.eventStore.append(event);
+    
+    <span class="code-comment">// Update read models</span>
+    <span class="code-keyword">await this</span>.projectionService.project(event);
+    
+    <span class="code-comment">// Trigger side effects</span>
+    <span class="code-keyword">await this</span>.notificationService.notifyNewPlant(event);
+  }
+}
+
+<span class="code-comment">// GraphQL Federation for API Gateway</span>
+<span class="code-decorator">@Resolver</span>(<span class="code-string">'Plant'</span>)
+<span class="code-keyword">export class</span> PlantResolver {
+  <span class="code-decorator">@Query</span>()
+  <span class="code-decorator">@UseGuards</span>(GqlAuthGuard)
+  <span class="code-keyword">async</span> plants(
+    <span class="code-decorator">@Args</span>(<span class="code-string">'filter'</span>) filter: PlantFilter,
+    <span class="code-decorator">@Context</span>() ctx: GraphQLContext,
+  ) {
+    <span class="code-keyword">return this</span>.plantService.findAll(filter, ctx.tenant);
+  }
+
+  <span class="code-decorator">@ResolveField</span>()
+  <span class="code-keyword">async</span> weatherData(<span class="code-decorator">@Parent</span>() plant: Plant) {
+    <span class="code-comment">// Federation: Weather data from another service</span>
+    <span class="code-keyword">return this</span>.weatherService.getByLocation(plant.location);
+  }
+}
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">🌟</span> Platform Capabilities</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <strong>🏭 Multi-Tenant</strong>
+                                <div>B2B SaaS for businesses</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>🤖 AI/ML</strong>
+                                <div>Predictive plant care</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>📡 IoT Ready</strong>
+                                <div>Smart garden integration</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>🌍 Global Scale</strong>
+                                <div>Multi-region deployment</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>📊 Big Data</strong>
+                                <div>Analytics & insights</div>
+                            </div>
+                            <div class="feature-card">
+                                <strong>🔒 Enterprise Security</strong>
+                                <div>SOC2, GDPR compliant</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metrics-bar">
+                        <div class="metric">
+                            <div class="metric-value">20+</div>
+                            <div class="metric-label">Microservices</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">10K+</div>
+                            <div class="metric-label">Req/sec</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">Enterprise</div>
+                            <div class="metric-label">Ready</div>
+                        </div>
+                    </div>
+                `
+            },
+            principles: {
+                title: 'Core NestJS Principles in The Pollinator',
+                badge: 'Architecture Deep Dive',
+                content: `
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">📐</span> 1. Separation of Concerns</h3>
+                        <div class="code-example">
+<span class="code-comment">// Clear separation in Pollinator</span>
+
+<span class="code-comment">// Controllers - Handle HTTP requests only</span>
+<span class="code-decorator">@Controller</span>(<span class="code-string">'plants'</span>)
+<span class="code-keyword">export class</span> PlantController {
+  <span class="code-comment">// No business logic here!</span>
+  <span class="code-decorator">@Get</span>(<span class="code-string">':id/care-schedule'</span>)
+  getCareSchedule(<span class="code-decorator">@Param</span>(<span class="code-string">'id'</span>) id: string) {
+    <span class="code-keyword">return this</span>.plantService.generateCareSchedule(id);
+  }
+}
+
+<span class="code-comment">// Services - Business logic only</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantService {
+  <span class="code-keyword">async</span> generateCareSchedule(plantId: string) {
+    <span class="code-keyword">const</span> plant = <span class="code-keyword">await this</span>.plantRepo.findOne(plantId);
+    <span class="code-keyword">const</span> weather = <span class="code-keyword">await this</span>.weatherService.getForecast();
+    <span class="code-keyword">return this</span>.careAlgorithm.calculate(plant, weather);
+  }
+}
+
+<span class="code-comment">// Repositories - Data access only</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantRepository {
+  <span class="code-comment">// Only database operations</span>
+  findOne(id: string) {
+    <span class="code-keyword">return this</span>.dataSource.getRepository(Plant).findOne(id);
+  }
+}
+                        </div>
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">🧪</span> 2. Test-Driven Development</h3>
+                        <div class="code-example">
+<span class="code-comment">// TDD in Pollinator - Test First!</span>
+
+describe(<span class="code-string">'PlantCareService'</span>, () => {
+  let service: PlantCareService;
+  let weatherService: MockWeatherService;
+
+  beforeEach(<span class="code-keyword">async</span> () => {
+    <span class="code-keyword">const</span> module = <span class="code-keyword">await</span> Test.createTestingModule({
+      providers: [
+        PlantCareService,
+        {
+          provide: WeatherService,
+          useClass: MockWeatherService, <span class="code-comment">// Easy mocking!</span>
+        },
+      ],
+    }).compile();
+
+    service = module.get(PlantCareService);
+    weatherService = module.get(WeatherService);
+  });
+
+  it(<span class="code-string">'should adjust watering based on rain forecast'</span>, <span class="code-keyword">async</span> () => {
+    <span class="code-comment">// Given: Rain is forecasted</span>
+    jest.spyOn(weatherService, <span class="code-string">'getForecast'</span>)
+      .mockResolvedValue({ rain: <span class="code-keyword">true</span>, amount: 10 });
+
+    <span class="code-comment">// When: Calculate care schedule</span>
+    <span class="code-keyword">const</span> schedule = <span class="code-keyword">await</span> service.calculateWatering(mockPlant);
+
+    <span class="code-comment">// Then: Watering should be delayed</span>
+    expect(schedule.nextWatering).toBeAfter(tomorrow);
+  });
+});
+                        </div>
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">🎨</span> 3. Modular Architecture</h3>
+                        <div class="code-example">
+<span class="code-comment">// Each feature is a self-contained module</span>
+
+<span class="code-comment">// Plant Module - Complete feature</span>
+<span class="code-decorator">@Module</span>({
+  imports: [
+    TypeOrmModule.forFeature([Plant, CareLog]),
+    WeatherModule, <span class="code-comment">// Import what you need</span>
+    NotificationModule,
+  ],
+  controllers: [PlantController],
+  providers: [
+    PlantService,
+    PlantRepository,
+    CareScheduler,
+    PlantHealthAnalyzer,
+  ],
+  exports: [PlantService], <span class="code-comment">// Export for other modules</span>
+})
+<span class="code-keyword">export class</span> PlantModule {}
+
+<span class="code-comment">// Weather Module - Completely independent</span>
+<span class="code-decorator">@Module</span>({
+  imports: [HttpModule, CacheModule],
+  providers: [
+    WeatherService,
+    WeatherstackProvider,
+    OpenWeatherProvider,
+  ],
+  exports: [WeatherService],
+})
+<span class="code-keyword">export class</span> WeatherModule {}
+
+<span class="code-comment">// Easy to add new features without touching existing code</span>
+<span class="code-decorator">@Module</span>({
+  imports: [PlantModule, UserModule],
+  providers: [RecommendationEngine],
+})
+<span class="code-keyword">export class</span> AIRecommendationModule {}
+                        </div>
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">⚡</span> 4. Dependency Injection</h3>
+                        <div class="code-example">
+<span class="code-comment">// DI makes everything pluggable and testable</span>
+
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantNotificationService {
+  <span class="code-keyword">constructor</span>(
+    <span class="code-comment">// Dependencies are injected, not created</span>
+    <span class="code-keyword">private readonly</span> emailService: EmailService,
+    <span class="code-keyword">private readonly</span> pushService: PushNotificationService,
+    <span class="code-keyword">private readonly</span> smsService: SmsService,
+    <span class="code-decorator">@Inject</span>(<span class="code-string">'CONFIG'</span>) <span class="code-keyword">private</span> config: AppConfig,
+  ) {}
+
+  <span class="code-keyword">async</span> sendCareReminder(user: User, plant: Plant) {
+    <span class="code-comment">// Use injected services based on user preferences</span>
+    <span class="code-keyword">const</span> channels = user.notificationPreferences;
+    
+    <span class="code-keyword">if</span> (channels.email) {
+      <span class="code-keyword">await this</span>.emailService.send(...);
+    }
+    <span class="code-keyword">if</span> (channels.push) {
+      <span class="code-keyword">await this</span>.pushService.send(...);
+    }
+  }
+}
+
+<span class="code-comment">// Easy to swap implementations</span>
+<span class="code-decorator">@Module</span>({
+  providers: [
+    {
+      provide: EmailService,
+      useClass: process.env.NODE_ENV === <span class="code-string">'production'</span> 
+        ? SendGridService 
+        : MockEmailService,
+    },
+  ],
+})
+                        </div>
+                    </div>
+
+                    <div class="principle-showcase">
+                        <h3 class="principle-title"><span class="icon">🤖</span> 5. AI-Enabled Development</h3>
+                        <div class="code-example">
+<span class="code-comment">// Clean, declarative code that AI understands</span>
+
+<span class="code-comment">// AI can easily understand and extend this pattern</span>
+<span class="code-decorator">@Injectable</span>()
+<span class="code-keyword">export class</span> PlantIdentificationService {
+  <span class="code-decorator">@UseAIAssist</span>({ model: <span class="code-string">'plant-vision-v2'</span> })
+  <span class="code-keyword">async</span> identifyPlant(imageBuffer: Buffer): Promise&lt;PlantIdentification&gt; {
+    <span class="code-comment">// AI tools can generate similar services easily</span>
+    <span class="code-keyword">return this</span>.aiService.analyze(imageBuffer);
+  }
+}
+
+<span class="code-comment">// Decorators make intent clear for AI</span>
+<span class="code-decorator">@ApiTags</span>(<span class="code-string">'plants'</span>)
+<span class="code-decorator">@ApiOperation</span>({ summary: <span class="code-string">'Get personalized care tips'</span> })
+<span class="code-decorator">@ApiResponse</span>({ status: 200, type: CareTipsDto })
+<span class="code-decorator">@Get</span>(<span class="code-string">':id/care-tips'</span>)
+<span class="code-keyword">async</span> getCareTips(<span class="code-decorator">@Param</span>(<span class="code-string">'id'</span>) id: string) {
+  <span class="code-comment">// AI can understand the flow and generate similar endpoints</span>
+  <span class="code-keyword">return this</span>.aiCareTipsService.generate(id);
+}
+                        </div>
+                    </div>
+
+                    <div class="features-grid" style="margin-top: 30px;">
+                        <div class="feature-card">
+                            <strong>📦 Modular</strong>
+                            <div>Each feature = module</div>
+                        </div>
+                        <div class="feature-card">
+                            <strong>🧪 Testable</strong>
+                            <div>DI enables easy mocking</div>
+                        </div>
+                        <div class="feature-card">
+                            <strong>🔄 Scalable</strong>
+                            <div>Grow without rewrites</div>
+                        </div>
+                        <div class="feature-card">
+                            <strong>🎯 Focused</strong>
+                            <div>Clear responsibilities</div>
+                        </div>
+                        <div class="feature-card">
+                            <strong>🤖 AI-Ready</strong>
+                            <div>Patterns AI understands</div>
+                        </div>
+                        <div class="feature-card">
+                            <strong>🚀 Agile</strong>
+                            <div>Fast pivots, safe changes</div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function showStage(stage) {
+            const content = document.getElementById('content');
+            const stageData = stages[stage];
+            
+            content.innerHTML = `
+                <div class="stage-header">
+                    <h2 class="stage-title">${stageData.title}</h2>
+                    <span class="stage-badge">${stageData.badge}</span>
+                </div>
+                ${stageData.content}
+            `;
+            
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(stage)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Add animation
+            content.style.animation = 'fadeIn 0.5s ease-out';
+        }
+
+        // Initialize with current state
+        showStage('current');
+    </script>
+</body>
+</html>
