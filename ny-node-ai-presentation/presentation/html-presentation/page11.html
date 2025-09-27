@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication & Authorization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Prism.js for syntax highlighting -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex items-center justify-center p-4 sm:p-6 lg:p-8"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(0.65);
+      "
+    >
+      <div class="max-w-7xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-8 animate__animated animate__fadeInDown">
+          <i class="fas fa-shield-alt text-5xl text-blue-400 mb-4"></i>
+          <h1 class="text-4xl font-bold text-white mb-3 leading-tight">
+            Authentication &
+            <span class="text-blue-400">Authorization</span>
+          </h1>
+          <h2 class="text-xl text-gray-300">
+            Secure Your APIs with Guards and Role-Based Access Control
+          </h2>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div
+          class="grid grid-cols-2 gap-8 animate__animated animate__fadeInUp animate__delay-1s"
+        >
+          <!-- Left: JWT Auth Guard -->
+          <div
+            class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30"
+          >
+            <h3
+              class="text-xl font-semibold text-blue-400 mb-4 flex items-center"
+            >
+              <i class="fas fa-key mr-3"></i>
+              JWT Authentication Guard
+            </h3>
+
+            <div class="bg-black/50 rounded-lg p-4 mb-4 overflow-hidden">
+              <pre
+                class="text-sm"
+              ><code class="language-typescript">@Injectable()
+export class JwtAuthGuard implements CanActivate {
+  constructor(
+    private jwtService: JwtService
+  ) {}
+
+  canActivate(context) {
+    const token = this.extractToken(context);
+    return this.jwtService.verify(token);
+  }
+}</code></pre>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Token extraction & validation</span
+                >
+              </div>
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Request context injection</span
+                >
+              </div>
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Automatic error handling</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Roles Guard -->
+          <div
+            class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30"
+          >
+            <h3
+              class="text-xl font-semibold text-purple-400 mb-4 flex items-center"
+            >
+              <i class="fas fa-users-cog mr-3"></i>
+              Role-Based Access Control
+            </h3>
+
+            <div class="bg-black/50 rounded-lg p-4 mb-4 overflow-hidden">
+              <pre
+                class="text-sm"
+              ><code class="language-typescript">@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(
+    private reflector: Reflector
+  ) {}
+
+  canActivate(context) {
+    const roles = this.reflector
+      .get('roles', context.getHandler());
+    return user.roles
+      .some(role => roles.includes(role));
+  }
+}</code></pre>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Metadata-driven authorization</span
+                >
+              </div>
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Flexible role hierarchies</span
+                >
+              </div>
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-sm"></i>
+                <span class="text-gray-300 text-sm"
+                  >Decorator-based configuration</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Usage Examples -->
+        <div
+          class="mt-8 grid grid-cols-2 gap-8 animate__animated animate__fadeInUp animate__delay-2s"
+        >
+          <!-- Controller Usage -->
+          <div
+            class="bg-gray-900/60 backdrop-blur-lg rounded-xl p-6 border border-emerald-500/30"
+          >
+            <h3
+              class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"
+            >
+              <i class="fas fa-code mr-2"></i>
+              Controller Implementation
+            </h3>
+            <div class="bg-black/50 rounded-lg p-4 overflow-hidden">
+              <pre
+                class="text-sm"
+              ><code class="language-typescript">@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('admin', 'moderator')
+@Get('/admin/users')
+async getUsers() {
+  // Only admin/moderator access
+  return this.usersService.findAll();
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- Security Benefits -->
+          <div
+            class="bg-gray-900/60 backdrop-blur-lg rounded-xl p-6 border border-blue-500/30"
+          >
+            <h3
+              class="text-lg font-semibold text-blue-400 mb-4 flex items-center"
+            >
+              <i class="fas fa-shield-alt mr-2"></i>
+              Security Benefits
+            </h3>
+            <div class="space-y-3">
+              <div class="flex items-start space-x-3">
+                <i class="fas fa-lock text-emerald-400 mt-1"></i>
+                <div>
+                  <div class="text-white font-medium">Layered Security</div>
+                  <div class="text-gray-400 text-sm">
+                    Multiple guard composition
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <i class="fas fa-eye text-blue-400 mt-1"></i>
+                <div>
+                  <div class="text-white font-medium">Transparent</div>
+                  <div class="text-gray-400 text-sm">
+                    Clear authorization logic
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <i class="fas fa-cogs text-purple-400 mt-1"></i>
+                <div>
+                  <div class="text-white font-medium">Configurable</div>
+                  <div class="text-gray-400 text-sm">
+                    Metadata-driven permissions
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-12 text-gray-500 text-sm">
+      International JavaScript Conference NYC 2025
+    </div>
+  </body>
+</html>

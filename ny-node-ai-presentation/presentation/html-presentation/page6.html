@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>NestJS Scalability Patterns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex flex-col justify-center items-center p-2 sm:p-3 lg:p-4"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(1);
+      "
+    >
+      <div class="text-center mb-6 animate__animated animate__fadeInDown">
+        <div style="position: relative; display: inline-block">
+          <h1
+            class="text-4xl font-bold text-white mb-3"
+            style="text-shadow: 0 4px 20px rgba(59, 130, 246, 0.3)"
+          >
+            Scalability Patterns
+          </h1>
+        </div>
+        <!-- <div
+          class="w-24 h-1 bg-gradient-to-r from-blue-400 to-green-400 mx-auto mb-4"
+          style="
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+          "
+        ></div> -->
+        <p class="text-xl text-gray-300" style="font-weight: 500">
+          Enterprise-Grade Architecture Solutions
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 w-full max-w-5xl">
+        <div
+          class="bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl p-5 border border-slate-600/30 animate__animated animate__fadeInLeft animate__delay-1s"
+          style="
+            backdrop-filter: blur(10px);
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          "
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4"
+              style="box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4)"
+            >
+              <i class="fas fa-cubes text-2xl text-white"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white" style="font-weight: 700">
+              Microservices
+            </h3>
+          </div>
+          <ul class="text-gray-300 space-y-3" style="font-weight: 500">
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Service decomposition
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Independent deployment
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Fault isolation
+            </li>
+          </ul>
+          <div
+            class="mt-6 bg-slate-800/50 rounded-lg p-4 border border-slate-600/20"
+            style="backdrop-filter: blur(5px)"
+          >
+            <div
+              class="text-sm text-blue-300 font-mono"
+              style="font-weight: 500"
+            >
+              @Module → @Injectable → @Controller
+            </div>
+          </div>
+        </div>
+        <div
+          class="bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl p-5 border border-slate-600/30 animate__animated animate__fadeInRight animate__delay-1s"
+          style="
+            backdrop-filter: blur(10px);
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          "
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4"
+              style="box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4)"
+            >
+              <i class="fas fa-expand-arrows-alt text-2xl text-white"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white" style="font-weight: 700">
+              Distributed Task Processing
+            </h3>
+          </div>
+          <ul class="text-gray-300 space-y-3" style="font-weight: 500">
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Queue Integration (Bull, Redis)
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Auto-scaling groups
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Scalable Workers
+            </li>
+          </ul>
+          <div
+            class="mt-6 bg-slate-800/50 rounded-lg p-4 border border-slate-600/20"
+            style="backdrop-filter: blur(5px)"
+          >
+            <div
+              class="text-sm text-emerald-300 font-mono"
+              style="font-weight: 500"
+            >
+              BullModule.register → @Processor() → @InjectQueue()
+            </div>
+          </div>
+        </div>
+        <div
+          class="bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl p-5 border border-slate-600/30 animate__animated animate__fadeInLeft animate__delay-2s"
+          style="
+            backdrop-filter: blur(10px);
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          "
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl flex items-center justify-center mr-4"
+              style="box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4)"
+            >
+              <i class="fas fa-database text-2xl text-white"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white" style="font-weight: 700">
+              Caching Strategies
+            </h3>
+          </div>
+          <ul class="text-gray-300 space-y-3" style="font-weight: 500">
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Multi-level caching
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Cache invalidation
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Redis integration
+            </li>
+          </ul>
+          <div
+            class="mt-6 bg-slate-800/50 rounded-lg p-4 border border-slate-600/20"
+            style="backdrop-filter: blur(5px)"
+          >
+            <div
+              class="text-sm text-violet-300 font-mono"
+              style="font-weight: 500"
+            >
+              @CacheModule.register → @Cacheable() → Redis
+            </div>
+          </div>
+        </div>
+        <div
+          class="bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl p-5 border border-slate-600/30 animate__animated animate__fadeInRight animate__delay-2s"
+          style="
+            backdrop-filter: blur(10px);
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          "
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4"
+              style="box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4)"
+            >
+              <i class="fas fa-tachometer-alt text-2xl text-white"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white" style="font-weight: 700">
+              Performance Optimization
+            </h3>
+          </div>
+          <ul class="text-gray-300 space-y-3" style="font-weight: 500">
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Connection pooling
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Query optimization
+            </li>
+            <li class="flex items-center">
+              <i
+                class="fas fa-check-circle text-emerald-400 mr-3"
+                style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              ></i
+              >Memory management
+            </li>
+          </ul>
+          <div
+            class="mt-6 bg-slate-800/50 rounded-lg p-4 border border-slate-600/20"
+            style="backdrop-filter: blur(5px)"
+          >
+            <div
+              class="text-sm text-amber-300 font-mono"
+              style="font-weight: 500"
+            >
+              @UseInterceptors() → Monitor & Optimize
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-3 text-center animate__animated animate__fadeInUp animate__delay-3s"
+      >
+        <div
+          class="bg-gradient-to-r from-slate-800/60 to-slate-700/40 rounded-2xl p-4 border border-slate-600/40"
+          style="
+            backdrop-filter: blur(15px);
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          "
+        >
+          <p class="text-lg text-gray-300 mb-2" style="font-weight: 500">
+            🚀
+            <span class="text-white font-semibold">Result:</span> Applications
+            that scale from
+            <span
+              class="text-blue-400 font-bold"
+              style="text-shadow: 0 0 10px rgba(59, 130, 246, 0.5)"
+              >1K</span
+            >
+            to
+            <span
+              class="text-emerald-400 font-bold"
+              style="text-shadow: 0 0 10px rgba(16, 185, 129, 0.5)"
+              >1M+</span
+            >
+            users seamlessly
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- INSPIRATION: This is a NestJS scalability patterns slide with a 2x2 grid layout showcasing four key patterns: Microservices, Horizontal Scaling, Caching Strategies, and Performance Optimization. The page uses a dark theme with gradient backgrounds and includes interactive charts. I need to enhance the visual appeal while maintaining the sophisticated dark interface with graphite black backgrounds and light gray/white text, using Inter font family for consistency. -->
