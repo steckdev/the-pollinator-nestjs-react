@@ -1,0 +1,687 @@
+<html
+  lang="en"
+  htmlid="tool_4c2f5995-51e1-437b-a43d-f9c64bcd7162"
+  style="scrollbar-width: none"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>The Pollinator: Growth of NestJS Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script edit-id="2f41dd57-c4e1-44d0-b089-7fdaba5e1498">
+      window.__g_cdnHost_3b9f42cac3b10c4ae42bc47decfba38c =
+        "//qhstatic-sg-s3.coohom.com/__p/static/-meijianGroups-client-mj-voxdeck-micro";
+    </script>
+    <script
+      type="pub-meta"
+      pt="micro"
+      pn="meijian-voxdeck-ai-micros-chat-edit-service"
+      pv="defualttag"
+      ps="1583922"
+      edit-id="fdd86b04-cbb6-4590-80bb-1bdc215d7afa"
+    ></script>
+    <style>
+      *,
+      ::before,
+      ::after {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-gradient-from-position: ;
+        --tw-gradient-via-position: ;
+        --tw-gradient-to-position: ;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246 / 0.5);
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+        --tw-shadow-colored: 0 0 #0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+        --tw-contain-size: ;
+        --tw-contain-layout: ;
+        --tw-contain-paint: ;
+        --tw-contain-style:   
+    ;
+      }
+
+      ::backdrop {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-gradient-from-position: ;
+        --tw-gradient-via-position: ;
+        --tw-gradient-to-position: ;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246 / 0.5);
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+        --tw-shadow-colored: 0 0 #0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+        --tw-contain-size: ;
+        --tw-contain-layout: ;
+        --tw-contain-paint: ;
+        --tw-contain-style:   
+    ;
+      }
+
+      /* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */
+      *,
+      ::after,
+      ::before {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: #e5e7eb;
+      }
+
+      ::after,
+      ::before {
+        --tw-content: "";
+      }
+
+      :host,
+      html {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        -moz-tab-size: 4;
+        tab-size: 4;
+        font-family:
+          ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        margin: 0;
+        line-height: inherit;
+      }
+
+      hr {
+        height: 0;
+        color: inherit;
+        border-top-width: 1px;
+      }
+
+      abbr:where([title]) {
+        -webkit-text-decoration: underline dotted;
+        text-decoration: underline dotted;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: inherit;
+        font-weight: inherit;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+
+      b,
+      strong {
+        font-weight: bolder;
+      }
+
+      code,
+      kbd,
+      pre,
+      samp {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-size: 1em;
+      }
+
+      small {
+        font-size: 80%;
+      }
+
+      sub,
+      sup {
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+      }
+
+      sub {
+        bottom: -0.25em;
+      }
+
+      sup {
+        top: -0.5em;
+      }
+
+      table {
+        text-indent: 0;
+        border-color: inherit;
+        border-collapse: collapse;
+      }
+
+      button,
+      input,
+      optgroup,
+      select,
+      textarea {
+        font-family: inherit;
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+      }
+
+      button,
+      select {
+        text-transform: none;
+      }
+
+      button,
+      input:where([type="button"]),
+      input:where([type="reset"]),
+      input:where([type="submit"]) {
+        -webkit-appearance: button;
+        background-color: transparent;
+        background-image: none;
+      }
+
+      :-moz-focusring {
+        outline: auto;
+      }
+
+      :-moz-ui-invalid {
+        box-shadow: none;
+      }
+
+      progress {
+        vertical-align: baseline;
+      }
+
+      ::-webkit-inner-spin-button,
+      ::-webkit-outer-spin-button {
+        height: auto;
+      }
+
+      [type="search"] {
+        -webkit-appearance: textfield;
+        outline-offset: -2px;
+      }
+
+      ::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+
+      ::-webkit-file-upload-button {
+        -webkit-appearance: button;
+        font: inherit;
+      }
+
+      summary {
+        display: list-item;
+      }
+
+      blockquote,
+      dd,
+      dl,
+      figure,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      hr,
+      p,
+      pre {
+        margin: 0;
+      }
+
+      fieldset {
+        margin: 0;
+        padding: 0;
+      }
+
+      legend {
+        padding: 0;
+      }
+
+      menu,
+      ol,
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      dialog {
+        padding: 0;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        opacity: 1;
+        color: #9ca3af;
+      }
+
+      [role="button"],
+      button {
+        cursor: pointer;
+      }
+
+      :disabled {
+        cursor: default;
+      }
+
+      audio,
+      canvas,
+      embed,
+      iframe,
+      img,
+      object,
+      svg,
+      video {
+        display: block;
+        vertical-align: middle;
+      }
+
+      img,
+      video {
+        max-width: 100%;
+        height: auto;
+      }
+
+      [hidden]:where(:not([hidden="until-found"])) {
+        display: none;
+      }
+
+      .absolute {
+        position: absolute;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .bottom-8 {
+        bottom: 2rem;
+      }
+
+      .left-0 {
+        left: 0px;
+      }
+
+      .right-8 {
+        right: 2rem;
+      }
+
+      .top-0 {
+        top: 0px;
+      }
+
+      .z-10 {
+        z-index: 10;
+      }
+
+      .mb-2 {
+        margin-bottom: 0.5rem;
+      }
+
+      .mb-4 {
+        margin-bottom: 1rem;
+      }
+
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+
+      .mb-4 {
+        margin-bottom: 2rem;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .h-full {
+        height: 100%;
+      }
+
+      .w-full {
+        width: 100%;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .justify-center {
+        justify-content: center;
+      }
+
+      .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 0;
+        margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+        margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+
+      .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 0;
+        margin-right: calc(2rem * var(--tw-space-x-reverse));
+        margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+
+      .rounded-lg {
+        border-radius: 0.5rem;
+      }
+
+      .border {
+        border-width: 1px;
+      }
+
+      .border-gray-600 {
+        --tw-border-opacity: 1;
+        border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+      }
+
+      .bg-gray-800 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+      }
+
+      .bg-opacity-60 {
+        --tw-bg-opacity: 0.6;
+      }
+
+      .p-4 {
+        padding: 1.5rem;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+
+      .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+
+      .text-4xl {
+        font-size: 3rem;
+        line-height: 1;
+      }
+
+      .text-6xl {
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+
+      .text-lg {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+      }
+
+      .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+
+      .text-xl {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+
+      .font-bold {
+        font-weight: 700;
+      }
+
+      .font-medium {
+        font-weight: 500;
+      }
+
+      .font-semibold {
+        font-weight: 600;
+      }
+
+      .text-gray-300 {
+        --tw-text-opacity: 1;
+        color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+      }
+
+      .text-gray-400 {
+        --tw-text-opacity: 1;
+        color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+      }
+
+      .text-green-400 {
+        --tw-text-opacity: 1;
+        color: rgb(74 222 128 / var(--tw-text-opacity, 1));
+      }
+
+      .text-white {
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+      }
+
+      .text-yellow-400 {
+        --tw-text-opacity: 1;
+        color: rgb(250 204 21 / var(--tw-text-opacity, 1));
+      }
+
+      .opacity-5 {
+        opacity: 0.05;
+      }
+
+      .backdrop-blur-sm {
+        --tw-backdrop-blur: blur(4px);
+        -webkit-backdrop-filter: var(--tw-backdrop-blur)
+          var(--tw-backdrop-brightness) var(--tw-backdrop-contrast)
+          var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate)
+          var(--tw-backdrop-invert) var(--tw-backdrop-opacity)
+          var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+        backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+          var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+          var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+          var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+          var(--tw-backdrop-sepia);
+      }
+    </style>
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(1.8);
+      "
+    >
+      <div class="text-center z-10 animate__animated animate__fadeInUp">
+        <div class="mb-4">
+          <i
+            class="fas fa-seedling text-6xl text-green-400 mb-4 animate__animated animate__pulse animate__infinite"
+          ></i>
+        </div>
+        <h1
+          class="text-4xl font-bold text-white mb-4 animate__animated animate__fadeInUp animate__delay-1s"
+          textnode="true"
+        >
+          The Pollinator
+        </h1>
+        <h2
+          class="text-3xl font-semibold text-gray-300 mb-6 animate__animated animate__fadeInUp animate__delay-2s"
+        >
+          Growth of NestJS Architecture
+        </h2>
+        <div
+          class="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-lg p-4 mb-4 border border-gray-600 animate__animated animate__fadeInUp animate__delay-3s"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2">
+            Scaling Node.js Applications with NestJS
+          </h3>
+          <p class="text-lg text-gray-300">
+            Patterns for Clean Architecture and High Performance
+          </p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-8 text-gray-300 animate__animated animate__fadeInUp animate__delay-4s"
+        >
+          <div class="text-center">
+            <i class="fas fa-calendar-alt text-2xl mb-2"></i>
+            <p class="text-sm font-medium">2025</p>
+          </div>
+          <div class="text-center">
+            <i class="fas fa-map-marker-alt text-2xl mb-2"></i>
+            <p class="text-sm font-medium">NYC</p>
+          </div>
+          <div class="text-center">
+            <i class="fab fa-js-square text-2xl mb-2 text-yellow-400"></i>
+            <p class="text-sm font-medium">JavaScript Conference</p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="absolute bottom-8 right-8 text-gray-400 animate__animated animate__fadeIn animate__delay-5s"
+      >
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-code text-lg"></i
+          ><span class="text-sm"
+            >International JavaScript Conference NYC 2025</span
+          >
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://qhstatic-sg-s3.coohom.com/__p/static/-meijianGroups-client-mj-voxdeck-micro/micros/meijian-voxdeck-ai-micros-chat-edit-service/entry.bf70e1f3e9c2e02752fe.js?pn=meijian-voxdeck-ai-micros-chat-edit-service&amp;ps=1583922"
+      ps="1583922"
+      crossorigin="anonymous"
+      edit-id="31196459-f0eb-4769-905d-4610e7e72019"
+    ></script>
+  </body>
+</html>
+<!-- INSPIRATION: This is a title slide for "The Pollinator: Growth of NestJS Architecture" presentation. I need to transform it to a dark theme while maintaining the original layout and content. The current slide has a purple gradient background with hexagon pattern, yellow accent colors, and white text. For the dark theme, I'll use graphite black as the primary background, light gray/white for text, and maintain the visual hierarchy. I'll keep the seedling icon, title structure, and information layout but adapt colors to the dark theme specification. -->

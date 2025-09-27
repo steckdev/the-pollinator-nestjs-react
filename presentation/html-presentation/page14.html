@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vertical Scaling Strategies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex items-center justify-center p-4 sm:p-6 lg:p-8"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(0.85);
+      "
+    >
+      <div class="max-w-7xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-8 animate__animated animate__fadeInDown">
+          <i class="fas fa-arrow-up text-5xl text-emerald-400 mb-4"></i>
+          <h1 class="text-4xl font-bold text-white mb-3 leading-tight">
+            Vertical Scaling
+            <span class="text-emerald-400">Strategies</span>
+          </h1>
+          <h2 class="text-xl text-gray-300">
+            Growing Feature Complexity Within Modules
+          </h2>
+        </div>
+
+        <!-- Main Content -->
+        <div
+          class="grid grid-cols-2 gap-8 animate__animated animate__fadeInUp animate__delay-1s"
+        >
+          <!-- Left: Module Evolution -->
+          <div class="space-y-6">
+            <!-- Weather Module Evolution -->
+            <div
+              class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30"
+            >
+              <h3
+                class="text-xl font-semibold text-blue-400 mb-4 flex items-center"
+              >
+                <i class="fas fa-cloud-sun mr-3"></i>
+                Weather Module Evolution
+              </h3>
+
+              <div class="space-y-4">
+                <!-- Simple -->
+                <div class="bg-gray-900/50 rounded-lg p-4">
+                  <div class="text-emerald-400 font-medium mb-2">
+                    Phase 1: Simple
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Single weather provider</div>
+                    <div>• Basic HTTP calls</div>
+                    <div>• Simple error handling</div>
+                  </div>
+                </div>
+
+                <!-- Enhanced -->
+                <div class="bg-gray-900/50 rounded-lg p-4">
+                  <div class="text-yellow-400 font-medium mb-2">
+                    Phase 2: Enhanced
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Multiple providers (OpenWeather, AccuWeather)</div>
+                    <div>• Circuit breaker pattern</div>
+                    <div>• Fallback mechanisms</div>
+                    <div>• Response caching</div>
+                  </div>
+                </div>
+
+                <!-- Advanced -->
+                <div class="bg-gray-900/50 rounded-lg p-4">
+                  <div class="text-purple-400 font-medium mb-2">
+                    Phase 3: Advanced
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Bulkhead isolation</div>
+                    <div>• Provider health monitoring</div>
+                    <div>• Intelligent routing</div>
+                    <div>• Historical data aggregation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Users Module Split -->
+            <div
+              class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30"
+            >
+              <h3
+                class="text-xl font-semibold text-purple-400 mb-4 flex items-center"
+              >
+                <i class="fas fa-users mr-3"></i>
+                Users Module Decomposition
+              </h3>
+
+              <div class="grid grid-cols-3 gap-3 text-center">
+                <div
+                  class="bg-blue-600/20 rounded-lg p-3 border border-blue-500/30"
+                >
+                  <i class="fas fa-id-card text-blue-400 mb-2"></i>
+                  <div class="text-sm font-medium text-white">Identity</div>
+                  <div class="text-xs text-gray-400">Auth & Tokens</div>
+                </div>
+                <div
+                  class="bg-emerald-600/20 rounded-lg p-3 border border-emerald-500/30"
+                >
+                  <i class="fas fa-user-circle text-emerald-400 mb-2"></i>
+                  <div class="text-sm font-medium text-white">Profile</div>
+                  <div class="text-xs text-gray-400">User Data</div>
+                </div>
+                <div
+                  class="bg-orange-600/20 rounded-lg p-3 border border-orange-500/30"
+                >
+                  <i class="fas fa-cog text-orange-400 mb-2"></i>
+                  <div class="text-sm font-medium text-white">Preferences</div>
+                  <div class="text-xs text-gray-400">Settings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: New Modules -->
+          <div class="space-y-6">
+            <!-- New Modules -->
+            <div
+              class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30"
+            >
+              <h3
+                class="text-xl font-semibold text-emerald-400 mb-4 flex items-center"
+              >
+                <i class="fas fa-plus-circle mr-3"></i>
+                New Domain Modules
+              </h3>
+
+              <div class="space-y-4">
+                <!-- Notifications -->
+                <div
+                  class="bg-gradient-to-r from-blue-600/20 to-blue-800/20 rounded-lg p-4 border border-blue-500/30"
+                >
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-bell text-blue-400 mr-2"></i>
+                    <span class="font-semibold text-white"
+                      >Notifications Module</span
+                    >
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Email, Push, SMS channels</div>
+                    <div>• Queue-based processing</div>
+                    <div>• Template management</div>
+                    <div>• Delivery tracking</div>
+                  </div>
+                </div>
+
+                <!-- Plant Care -->
+                <div
+                  class="bg-gradient-to-r from-emerald-600/20 to-emerald-800/20 rounded-lg p-4 border border-emerald-500/30"
+                >
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-seedling text-emerald-400 mr-2"></i>
+                    <span class="font-semibold text-white"
+                      >PlantCare Module</span
+                    >
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Care scheduling engine</div>
+                    <div>• Growth analytics</div>
+                    <div>• Health monitoring</div>
+                    <div>• Recommendation system</div>
+                  </div>
+                </div>
+
+                <!-- Analytics -->
+                <div
+                  class="bg-gradient-to-r from-purple-600/20 to-purple-800/20 rounded-lg p-4 border border-purple-500/30"
+                >
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-chart-line text-purple-400 mr-2"></i>
+                    <span class="font-semibold text-white"
+                      >Analytics Module</span
+                    >
+                  </div>
+                  <div class="text-sm text-gray-300 space-y-1">
+                    <div>• Usage metrics collection</div>
+                    <div>• Performance dashboards</div>
+                    <div>• Predictive insights</div>
+                    <div>• Report generation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scaling Principles -->
+            <div
+              class="bg-gray-900/60 backdrop-blur-lg rounded-xl p-6 border border-yellow-500/30"
+            >
+              <h3
+                class="text-xl font-semibold text-yellow-400 mb-4 flex items-center"
+              >
+                <i class="fas fa-lightbulb mr-3"></i>
+                Scaling Principles
+              </h3>
+
+              <div class="space-y-3">
+                <div class="flex items-start space-x-3">
+                  <i class="fas fa-cube text-emerald-400 mt-1"></i>
+                  <div>
+                    <div class="text-white font-medium">
+                      Single Responsibility
+                    </div>
+                    <div class="text-gray-400 text-sm">
+                      Each module owns one domain
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <i class="fas fa-plug text-blue-400 mt-1"></i>
+                  <div>
+                    <div class="text-white font-medium">Loose Coupling</div>
+                    <div class="text-gray-400 text-sm">
+                      Modules communicate via contracts
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <i class="fas fa-expand-arrows-alt text-purple-400 mt-1"></i>
+                  <div>
+                    <div class="text-white font-medium">High Cohesion</div>
+                    <div class="text-gray-400 text-sm">
+                      Related functionality grouped
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <i class="fas fa-vial text-orange-400 mt-1"></i>
+                  <div>
+                    <div class="text-white font-medium">Testable</div>
+                    <div class="text-gray-400 text-sm">
+                      Easy to mock and isolate
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Benefits -->
+        <div
+          class="mt-8 bg-gray-800/60 backdrop-blur-lg rounded-2xl p-6 border border-gray-600/30 animate__animated animate__fadeInUp animate__delay-2s"
+        >
+          <div class="grid grid-cols-4 gap-6 text-center">
+            <div>
+              <i class="fas fa-layer-group text-3xl text-blue-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">
+                Modular Growth
+              </h4>
+              <p class="text-sm text-gray-300">
+                Add features without affecting existing code
+              </p>
+            </div>
+            <div>
+              <i class="fas fa-users text-3xl text-emerald-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">
+                Team Scaling
+              </h4>
+              <p class="text-sm text-gray-300">
+                Multiple teams can work independently
+              </p>
+            </div>
+            <div>
+              <i class="fas fa-shield-alt text-3xl text-purple-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">
+                Risk Isolation
+              </h4>
+              <p class="text-sm text-gray-300">
+                Failures contained within modules
+              </p>
+            </div>
+            <div>
+              <i class="fas fa-rocket text-3xl text-orange-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">Performance</h4>
+              <p class="text-sm text-gray-300">
+                Optimize individual modules independently
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-12 text-gray-500 text-sm">
+      International JavaScript Conference NYC 2025
+    </div>
+  </body>
+</html>

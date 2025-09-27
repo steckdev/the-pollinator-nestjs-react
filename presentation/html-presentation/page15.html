@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Scaling & Microservices</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="width: 100vw; height: 100vh; margin: 0; padding: 0; overflow: hidden; font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%); display: flex; align-items: center; justify-content: center;">
+    
+    <div class="w-full h-full flex items-center justify-center p-4 sm:p-6 lg:p-8" style="max-width: 100vw; max-height: 100vh; box-sizing: border-box;">
+        <div class="max-w-7xl w-full">
+            
+            <!-- Header -->
+            <div class="text-center mb-6 animate__animated animate__fadeInDown">
+                <i class="fas fa-sitemap text-4xl text-blue-400 mb-3"></i>
+                <h1 class="text-3xl font-bold text-white mb-2 leading-tight">
+                    Horizontal Scaling &
+                    <span class="text-blue-400">Microservices</span>
+                </h1>
+                <h2 class="text-lg text-gray-300">
+                    Evolution from Monolith to Distributed Architecture
+                </h2>
+            </div>
+            
+            <!-- Evolution Timeline -->
+            <div class="mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="flex items-center justify-between bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30">
+                    
+                    <!-- Monolith -->
+                    <div class="text-center flex-1">
+                        <div class="bg-gray-700 rounded-lg p-4 mb-3 mx-2">
+                            <i class="fas fa-cube text-3xl text-gray-400 mb-2"></i>
+                            <div class="text-white font-semibold">Monolith</div>
+                            <div class="text-xs text-gray-400">Single deployment</div>
+                        </div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-right text-emerald-400 text-xl mx-4"></i>
+                    
+                    <!-- Modular Monolith -->
+                    <div class="text-center flex-1">
+                        <div class="bg-emerald-700/30 rounded-lg p-4 mb-3 mx-2 border border-emerald-500/30">
+                            <i class="fas fa-cubes text-3xl text-emerald-400 mb-2"></i>
+                            <div class="text-white font-semibold">Modular Monolith</div>
+                            <div class="text-xs text-gray-400">Clear boundaries</div>
+                        </div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-right text-blue-400 text-xl mx-4"></i>
+                    
+                    <!-- Service Extraction -->
+                    <div class="text-center flex-1">
+                        <div class="bg-blue-700/30 rounded-lg p-4 mb-3 mx-2 border border-blue-500/30">
+                            <i class="fas fa-puzzle-piece text-3xl text-blue-400 mb-2"></i>
+                            <div class="text-white font-semibold">Service Extraction</div>
+                            <div class="text-xs text-gray-400">Gradual separation</div>
+                        </div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-right text-purple-400 text-xl mx-4"></i>
+                    
+                    <!-- Microservices -->
+                    <div class="text-center flex-1">
+                        <div class="bg-purple-700/30 rounded-lg p-4 mb-3 mx-2 border border-purple-500/30">
+                            <i class="fas fa-network-wired text-3xl text-purple-400 mb-2"></i>
+                            <div class="text-white font-semibold">Microservices</div>
+                            <div class="text-xs text-gray-400">Independent services</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-2 gap-8 animate__animated animate__fadeInUp animate__delay-2s">
+                
+                <!-- Left: Architecture Diagram -->
+                <div class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-6 border border-gray-600/30">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-4 flex items-center">
+                        <i class="fas fa-project-diagram mr-3"></i>
+                        Microservices Architecture
+                    </h3>
+                    
+                    <!-- API Gateway -->
+                    <div class="text-center mb-4">
+                        <div class="bg-emerald-600/20 rounded-lg p-3 border border-emerald-500/30 inline-block">
+                            <i class="fas fa-door-open text-emerald-400 mr-2"></i>
+                            <span class="text-white font-medium">API Gateway</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Services Grid -->
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="bg-blue-600/20 rounded-lg p-3 border border-blue-500/30 text-center">
+                            <i class="fas fa-users text-blue-400 mb-1"></i>
+                            <div class="text-white text-sm font-medium">Users Service</div>
+                            <div class="text-xs text-gray-400">Identity & Profile</div>
+                        </div>
+                        <div class="bg-purple-600/20 rounded-lg p-3 border border-purple-500/30 text-center">
+                            <i class="fas fa-seedling text-purple-400 mb-1"></i>
+                            <div class="text-white text-sm font-medium">Plants Service</div>
+                            <div class="text-xs text-gray-400">Care & Analytics</div>
+                        </div>
+                        <div class="bg-orange-600/20 rounded-lg p-3 border border-orange-500/30 text-center">
+                            <i class="fas fa-cloud-sun text-orange-400 mb-1"></i>
+                            <div class="text-white text-sm font-medium">Weather Service</div>
+                            <div class="text-xs text-gray-400">External Data</div>
+                        </div>
+                        <div class="bg-pink-600/20 rounded-lg p-3 border border-pink-500/30 text-center">
+                            <i class="fas fa-bell text-pink-400 mb-1"></i>
+                            <div class="text-white text-sm font-medium">Notifications</div>
+                            <div class="text-xs text-gray-400">Multi-channel</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Message Broker -->
+                    <div class="text-center">
+                        <div class="bg-yellow-600/20 rounded-lg p-3 border border-yellow-500/30 inline-block">
+                            <i class="fas fa-exchange-alt text-yellow-400 mr-2"></i>
+                            <span class="text-white font-medium">Message Broker</span>
+                            <div class="text-xs text-gray-400">RMQ / Redis / NATS</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Migration Strategy -->
+                <div class="space-y-6">
+                    
+                    <!-- Strangler Pattern -->
+                    <div class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-5 border border-gray-600/30">
+                        <h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center">
+                            <i class="fas fa-route mr-2"></i>
+                            Strangler Pattern
+                        </h3>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-emerald-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-white">1</div>
+                                <div>
+                                    <div class="text-white font-medium">Route through Gateway</div>
+                                    <div class="text-gray-400">Direct traffic to new services</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-white">2</div>
+                                <div>
+                                    <div class="text-white font-medium">Gradual Migration</div>
+                                    <div class="text-gray-400">Move features incrementally</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-purple-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-white">3</div>
+                                <div>
+                                    <div class="text-white font-medium">Legacy Retirement</div>
+                                    <div class="text-gray-400">Remove old monolith code</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Communication Patterns -->
+                    <div class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-5 border border-gray-600/30">
+                        <h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center">
+                            <i class="fas fa-comments mr-2"></i>
+                            Communication Patterns
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-blue-600/20 rounded-lg p-3 border border-blue-500/30">
+                                <div class="text-blue-400 font-medium text-sm mb-1">Synchronous</div>
+                                <div class="text-xs text-gray-300">HTTP/gRPC for real-time queries</div>
+                            </div>
+                            <div class="bg-emerald-600/20 rounded-lg p-3 border border-emerald-500/30">
+                                <div class="text-emerald-400 font-medium text-sm mb-1">Asynchronous</div>
+                                <div class="text-xs text-gray-300">Events for background processing</div>
+                            </div>
+                            <div class="bg-orange-600/20 rounded-lg p-3 border border-orange-500/30">
+                                <div class="text-orange-400 font-medium text-sm mb-1">Event Sourcing</div>
+                                <div class="text-xs text-gray-300">Audit trails and state reconstruction</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <!-- Bottom: Benefits & Challenges -->
+            <div class="mt-6 grid grid-cols-2 gap-6 animate__animated animate__fadeInUp animate__delay-3s">
+                
+                <!-- Benefits -->
+                <div class="bg-emerald-900/30 backdrop-blur-lg rounded-xl p-5 border border-emerald-500/30">
+                    <h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center">
+                        <i class="fas fa-thumbs-up mr-2"></i>
+                        Benefits
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-emerald-400 text-xs"></i>
+                            <span class="text-gray-300">Independent scaling</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-emerald-400 text-xs"></i>
+                            <span class="text-gray-300">Technology diversity</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-emerald-400 text-xs"></i>
+                            <span class="text-gray-300">Team autonomy</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-emerald-400 text-xs"></i>
+                            <span class="text-gray-300">Fault isolation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Challenges -->
+                <div class="bg-red-900/30 backdrop-blur-lg rounded-xl p-5 border border-red-500/30">
+                    <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Challenges
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-times text-red-400 text-xs"></i>
+                            <span class="text-gray-300">Network complexity</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-times text-red-400 text-xs"></i>
+                            <span class="text-gray-300">Data consistency</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-times text-red-400 text-xs"></i>
+                            <span class="text-gray-300">Operational overhead</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-times text-red-400 text-xs"></i>
+                            <span class="text-gray-300">Distributed debugging</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="absolute bottom-8 left-12 text-gray-500 text-sm">
+        International JavaScript Conference NYC 2025
+    </div>
+    
+</body>
+</html>

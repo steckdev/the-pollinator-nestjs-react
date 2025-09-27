@@ -4,6 +4,7 @@ _class: lead
 paginate: true
 backgroundColor: #667eea
 backgroundImage: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+marp: true
 ---
 
 <style>
@@ -23,9 +24,20 @@ backgroundImage: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
   .lead section {
     color: white;
     text-align: center;
-    background-image: url('images/ny_ijs_template_footer.jpg');
+    background-image: url('images/title_background.png');
     background-size: cover;
     background-position: center;
+    font-size: 3em;
+  }
+  .lead h1 {
+    font-size: 3em;
+    margin: 50px 0 30px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  }
+  .lead p {
+    font-size: 1.2em;
+    margin: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   }
   .code-small { font-size: 16px; }
   .impact-box {
@@ -97,32 +109,127 @@ backgroundImage: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
     background: url('images/ny_ijs_template_footer.jpg') center bottom;
     background-size: cover;
   }
-
-  /* Better content spacing */
-  p { margin: 8px 0; }
-  ul, ol { margin: 8px 0; padding-left: 20px; }
-  li { margin: 4px 0; }
-
-  /* Ensure content doesn't overflow */
-  section > * {
-    flex-shrink: 0;
+  .title-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 100px;
   }
-
-  /* Compact lists for better fit */
-  .code-small {
-    font-size: 14px;
-    line-height: 1.2;
+  .title-subtitle {
+    font-size: 1.8em;
+    color: white;
+    margin: 20px 0;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   }
+  .conference-info {
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  } 
 </style>
 
 # 🌻 The Pollinator: NestJS Architecture Evolution 🌱
 
-**Scaling Node.js Applications: From Startup MVP to Enterprise Platform**
-
-_International JavaScript Conference NYC 2025_
-_Tyler Steck · Live Architecture Demo_
+<div class="title-content">
+  <h2 class="title-subtitle">
+    Scaling Node.js Applications with NestJS:<br>
+    Patterns for Clean Architecture + High Performance
+  </h2>
+  
+  <div class="conference-info">
+    <p >International JavaScript Conference NYC 2025</p>
+    <p >Tyler Steck · Framework & Architecture</p>
+  </div>
+</div>
 
 <div class="conference-footer"></div>
+
+---
+
+# 📚 A Brief History of NestJS
+
+<div style="text-align: center; margin: 20px 0;">
+<img src="images/nestjs-history-placeholder.png" alt="NestJS History Timeline" style="width: 100%; max-width: 600px; background: white; border-radius: 10px; padding: 20px;">
+</div>
+
+<div class="evolution-stage">
+
+## 🚀 From Zero to Hero (2017-2025)
+
+- **December 2017** → Created by Kamil Myśliwiec _(because Express needed a grown-up)_
+- **2018-2019** → Rapid adoption in enterprise _(developers finally found their Angular for backend)_
+- **2020-2023** → Ecosystem explosion _(microservices, GraphQL, WebSockets... it does everything!)_
+- **2025** → **70,000+ GitHub stars** ⭐ _(more popular than your favorite cat videos)_
+
+</div>
+
+<div class="impact-box">
+<strong>Fun Fact:</strong> NestJS solved the "Node.js structure problem" that kept developers awake at night since 2009
+</div>
+
+---
+
+# 🤔 What is NestJS? (For the Uninitiated)
+
+<div style="text-align: center; margin: 20px 0;">
+<img src="images/nestjs-logo-placeholder.png" alt="NestJS Logo" style="width: 200px; height: 200px; background: white; border-radius: 50%; padding: 20px;">
+</div>
+
+<div class="evolution-stage">
+
+## 🎯 The Elevator Pitch
+
+**NestJS is a progressive Node.js framework** that makes building server-side applications feel like magic ✨
+
+- **TypeScript by default** → Because `any` is not a type strategy
+- **Decorator-based** → Like annotations, but cooler
+- **Modular architecture** → LEGO blocks for grown-ups
+- **Enterprise-ready** → Trusted by thousands of companies worldwide
+
+</div>
+
+<div class="metric-box">
+<span class="metric-number">70K+</span>
+<div class="metric-label">GitHub Stars</div>
+</div>
+
+<div class="metric-box">
+<span class="metric-number">100%</span>
+<div class="metric-label">Developer Happiness</div>
+</div>
+
+---
+
+# 🏗️ NestJS Architecture: The Magic Behind the Curtain
+
+<div style="text-align: center; margin: 20px 0;">
+<img src="images/nestjs-architecture-placeholder.png" alt="NestJS Architecture Diagram" style="width: 100%; max-width: 700px; background: white; border-radius: 10px; padding: 20px;">
+</div>
+
+<div class="evolution-stage">
+
+## 🧩 The Building Blocks
+
+**Every NestJS app is built from modules:**
+
+- **Controllers** → Handle HTTP requests & responses _(the front desk)_
+- **Services** → Business logic & data processing _(the brain)_
+- **Providers** → Dependencies (databases, APIs, utilities) _(the toolbox)_
+- **Guards** → Authentication & authorization _(the bouncer)_
+- **Interceptors** → Cross-cutting concerns _(the middleware ninja)_
+- **Pipes** → Data validation & transformation _(the quality control)_
+
+</div>
+
+<div class="impact-box">
+<strong>The Secret Sauce:</strong> Dependency injection makes everything testable, swappable, and maintainable
+</div>
+
+</div>
+
+<div class="impact-box">
+<strong>The Power:</strong> Each module is self-contained, testable, and reusable across your entire application
+</div>
 
 ---
 
@@ -140,16 +247,13 @@ _Tyler Steck · Live Architecture Demo_
 </div>
 
 <div class="metric-box">
-<span class="metric-number">10+</span>
+<span class="metric-number">20+</span>
 <div class="metric-label">Modules → Product</div>
 </div>
 
-<div class="metric-box">
-<span class="metric-number">20+</span>
-<div class="metric-label">Services → Platform</div>
 </div>
 
-**Live Demo:** Transform a simple plant care app into an enterprise platform
+**Live Demo:** Transform a simple plant care app into scalable service
 
 ---
 
@@ -181,15 +285,13 @@ export class PlantModule {}
 <div class="metric-box">
 <span class="metric-number">✅</span>
 <div class="metric-label">Modular from Day 1</div>
-</div>
 
-<div class="metric-box">
 <span class="metric-number">✅</span>
+
 <div class="metric-label">DI Built-in</div>
-</div>
 
-<div class="metric-box">
 <span class="metric-number">✅</span>
+
 <div class="metric-label">TypeScript Native</div>
 </div>
 

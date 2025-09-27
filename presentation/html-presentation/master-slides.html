@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Pollinator - Master Slides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="slides-config.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #000;
+        font-family: "Inter", sans-serif;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .slide-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        background: #000;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .slide-frame {
+        width: 100vw;
+        height: 100vh;
+        border: none;
+        display: none;
+        background: #000;
+        transform-origin: center center;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .slide-frame.active {
+        display: block;
+      }
+
+      .navigation {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .nav-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      .nav-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .slide-indicator {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .slide-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: #10b981;
+        transform: scale(1.2);
+      }
+
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 18px;
+      }
+
+      .slide-title {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #10b981, #3b82f6);
+        z-index: 1001;
+        transition: width 0.3s ease;
+      }
+
+      .slide-notes {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 12px;
+        max-width: 250px;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: none;
+      }
+
+      .fullscreen-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .fullscreen-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar" id="progress-bar" style="width: 12.5%"></div>
+
+    <div class="slide-container">
+      <div class="loading" id="loading">Loading slide...</div>
+      <iframe id="slide-frame" class="slide-frame" src=""></iframe>
+    </div>
+
+    <div class="slide-title" id="slide-title">Slide 1</div>
+
+    <div class="slide-notes" id="slide-notes">
+      <div id="slide-description"></div>
+      <div
+        id="slide-duration"
+        style="margin-top: 8px; font-size: 11px; opacity: 0.7"
+      ></div>
+    </div>
+
+    <button
+      class="fullscreen-toggle"
+      onclick="toggleFullscreen()"
+      title="Toggle Fullscreen"
+    >
+      <i class="fas fa-expand"></i>
+    </button>
+
+    <div class="navigation">
+      <button
+        class="nav-button"
+        id="prev-btn"
+        onclick="previousSlide()"
+        title="Previous Slide"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="slide-dots" id="slide-dots"></div>
+
+      <div class="slide-indicator" id="slide-indicator">1 / 8</div>
+
+      <button
+        class="nav-button"
+        id="next-btn"
+        onclick="nextSlide()"
+        title="Next Slide"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <script>
+      class SlideMaster {
+        constructor() {
+          this.config = window.SLIDES_CONFIG || {};
+          this.currentSlide = 1;
+          this.totalSlides = this.config.totalSlides || 16;
+          this.slideData = this.config.slideData || [];
+
+          this.slideFrame = document.getElementById("slide-frame");
+          this.loading = document.getElementById("loading");
+          this.slideTitle = document.getElementById("slide-title");
+          this.slideIndicator = document.getElementById("slide-indicator");
+          this.slideDots = document.getElementById("slide-dots");
+          this.prevBtn = document.getElementById("prev-btn");
+          this.nextBtn = document.getElementById("next-btn");
+          this.progressBar = document.getElementById("progress-bar");
+          this.slideNotes = document.getElementById("slide-notes");
+          this.slideDescription = document.getElementById("slide-description");
+          this.slideDuration = document.getElementById("slide-duration");
+
+          this.init();
+        }
+
+        init() {
+          this.createDots();
+          this.loadSlide(this.currentSlide);
+          this.updateNavigation();
+          this.setupKeyboardNavigation();
+          this.setupResizeHandler();
+        }
+
+        setupResizeHandler() {
+          window.addEventListener("resize", () => {
+            this.scaleSlideContent();
+          });
+
+          document.addEventListener("fullscreenchange", () => {
+            setTimeout(() => {
+              this.scaleSlideContent();
+            }, 100);
+          });
+        }
+
+        createDots() {
+          this.slideDots.innerHTML = "";
+          for (let i = 1; i <= this.totalSlides; i++) {
+            const dot = document.createElement("div");
+            dot.className = "dot";
+            dot.onclick = () => this.goToSlide(i);
+            this.slideDots.appendChild(dot);
+          }
+        }
+
+        loadSlide(slideNumber) {
+          this.loading.style.display = "block";
+          this.slideFrame.style.display = "none";
+
+          const slideData = this.slideData[slideNumber - 1];
+          const slideUrl = slideData
+            ? slideData.filename
+            : `page${slideNumber}.html`;
+          this.slideFrame.src = slideUrl;
+
+          this.slideFrame.onload = () => {
+            this.loading.style.display = "none";
+            this.slideFrame.style.display = "block";
+            this.slideFrame.classList.add("active");
+            this.scaleSlideContent();
+          };
+
+          this.slideFrame.onerror = () => {
+            this.loading.innerHTML = `Error loading slide ${slideNumber}`;
+          };
+
+          this.updateSlideInfo(slideNumber);
+          this.updateProgress(slideNumber);
+        }
+
+        scaleSlideContent() {
+          try {
+            const iframe = this.slideFrame;
+            const iframeDoc =
+              iframe.contentDocument || iframe.contentWindow.document;
+            const body = iframeDoc.body;
+
+            if (body) {
+              body.style.margin = "0";
+              body.style.padding = "0";
+              body.style.width = "100vw";
+              body.style.height = "100vh";
+              body.style.overflow = "hidden";
+              body.style.transform = "scale(1)";
+              body.style.transformOrigin = "top left";
+
+              const container = iframeDoc.querySelector(".slide") || body;
+              if (container) {
+                container.style.width = "100vw";
+                container.style.height = "100vh";
+                container.style.display = "flex";
+                container.style.flexDirection = "column";
+                container.style.justifyContent = "center";
+                container.style.alignItems = "center";
+                container.style.boxSizing = "border-box";
+                container.style.padding = "2rem";
+              }
+            }
+          } catch (e) {
+            console.log("Could not scale slide content:", e);
+          }
+        }
+
+        updateSlideInfo(slideNumber) {
+          const slideData = this.slideData[slideNumber - 1];
+
+          this.slideTitle.textContent = slideData
+            ? slideData.title
+            : `Slide ${slideNumber}`;
+          this.slideIndicator.textContent = `${slideNumber} / ${this.totalSlides}`;
+
+          // Update slide notes
+          if (slideData) {
+            this.slideDescription.textContent = slideData.description || "";
+            this.slideDuration.textContent = slideData.duration
+              ? `Duration: ${slideData.duration}s`
+              : "";
+            this.slideNotes.style.display = "block";
+          } else {
+            this.slideNotes.style.display = "none";
+          }
+
+          // Update dots
+          const dots = this.slideDots.querySelectorAll(".dot");
+          dots.forEach((dot, index) => {
+            dot.classList.toggle("active", index === slideNumber - 1);
+          });
+        }
+
+        updateProgress(slideNumber) {
+          const progress = (slideNumber / this.totalSlides) * 100;
+          this.progressBar.style.width = `${progress}%`;
+        }
+
+        updateNavigation() {
+          this.prevBtn.disabled = this.currentSlide === 1;
+          this.nextBtn.disabled = this.currentSlide === this.totalSlides;
+        }
+
+        goToSlide(slideNumber) {
+          if (slideNumber >= 1 && slideNumber <= this.totalSlides) {
+            this.currentSlide = slideNumber;
+            this.loadSlide(this.currentSlide);
+            this.updateNavigation();
+          }
+        }
+
+        nextSlide() {
+          if (this.currentSlide < this.totalSlides) {
+            this.goToSlide(this.currentSlide + 1);
+          }
+        }
+
+        previousSlide() {
+          if (this.currentSlide > 1) {
+            this.goToSlide(this.currentSlide - 1);
+          }
+        }
+
+        setupKeyboardNavigation() {
+          document.addEventListener("keydown", e => {
+            switch (e.key) {
+              case "ArrowRight":
+              case " ":
+                e.preventDefault();
+                this.nextSlide();
+                break;
+              case "ArrowLeft":
+                e.preventDefault();
+                this.previousSlide();
+                break;
+              case "Home":
+                e.preventDefault();
+                this.goToSlide(1);
+                break;
+              case "End":
+                e.preventDefault();
+                this.goToSlide(this.totalSlides);
+                break;
+              case "f":
+              case "F11":
+                e.preventDefault();
+                toggleFullscreen();
+                break;
+              case "n":
+              case "N":
+                e.preventDefault();
+                this.toggleNotes();
+                break;
+              case "e":
+              case "E":
+                if (e.ctrlKey || e.metaKey) {
+                  e.preventDefault();
+                  this.openSlideEditor();
+                }
+                break;
+            }
+          });
+        }
+
+        toggleNotes() {
+          const isVisible = this.slideNotes.style.display !== "none";
+          this.slideNotes.style.display = isVisible ? "none" : "block";
+        }
+
+        openSlideEditor() {
+          const slideData = this.slideData[this.currentSlide - 1];
+          const filename = slideData
+            ? slideData.filename
+            : `page${this.currentSlide}.html`;
+          window.open(filename, "_blank");
+        }
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+      function nextSlide() {
+        slideMaster.nextSlide();
+      }
+
+      function previousSlide() {
+        slideMaster.previousSlide();
+      }
+
+      // Initialize the slide master
+      const slideMaster = new SlideMaster();
+    </script>
+  </body>
+</html>

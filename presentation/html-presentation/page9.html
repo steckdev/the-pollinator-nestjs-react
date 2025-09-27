@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NestJS Core Patterns Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex items-center justify-center p-4 sm:p-4 lg:p-5"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(1.3);
+      "
+    >
+      <div class="max-w-7xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-4 animate__animated animate__fadeInDown">
+          <i class="fas fa-cogs text-4xl text-emerald-400 mb-4"></i>
+          <h1 class="text-4xl font-bold text-white mb-3 leading-tight">
+            NestJS Core Patterns
+          </h1>
+          <h2 class="text-xl text-gray-300">
+            Building Blocks for Scalable Architecture
+          </h2>
+        </div>
+
+        <!-- Core Patterns Grid -->
+        <div
+          class="grid grid-cols-5 gap-4 animate__animated animate__fadeInUp animate__delay-1s"
+        >
+          <!-- Guards -->
+          <div
+            class="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-xl p-4 border border-blue-500/30 text-center hover:scale-105 transition-transform duration-300"
+          >
+            <i class="fas fa-shield-alt text-4xl text-blue-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-white mb-3">Guards</h3>
+            <div class="space-y-2 text-sm text-gray-300">
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Authentication</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Authorization</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Rate Limiting</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interceptors -->
+          <div
+            class="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-xl p-4 border border-purple-500/30 text-center hover:scale-105 transition-transform duration-300"
+          >
+            <i class="fas fa-filter text-4xl text-purple-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-white mb-3">Interceptors</h3>
+            <div class="space-y-2 text-sm text-gray-300">
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Logging</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Caching</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Transform</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipes -->
+          <div
+            class="bg-gradient-to-br from-orange-600/20 to-orange-800/20 backdrop-blur-lg rounded-xl p-4 border border-orange-500/30 text-center hover:scale-105 transition-transform duration-300"
+          >
+            <i class="fas fa-funnel-dollar text-4xl text-orange-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-white mb-3">Pipes</h3>
+            <div class="space-y-2 text-sm text-gray-300">
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Validation</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Transformation</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Parsing</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorators -->
+          <div
+            class="bg-gradient-to-br from-pink-600/20 to-pink-800/20 backdrop-blur-lg rounded-xl p-4 border border-pink-500/30 text-center hover:scale-105 transition-transform duration-300"
+          >
+            <i class="fas fa-at text-4xl text-pink-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-white mb-3">Decorators</h3>
+            <div class="space-y-2 text-sm text-gray-300">
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Metadata</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Custom Logic</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>DX Enhancement</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dependency Injection -->
+          <div
+            class="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 backdrop-blur-lg rounded-xl p-4 border border-emerald-500/30 text-center hover:scale-105 transition-transform duration-300"
+          >
+            <i class="fas fa-sitemap text-4xl text-emerald-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-white mb-3">DI Container</h3>
+            <div class="space-y-2 text-sm text-gray-300">
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Loose Coupling</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Testability</span>
+              </div>
+              <div class="flex items-center justify-center space-x-2">
+                <i class="fas fa-check text-emerald-400 text-xs"></i>
+                <span>Modularity</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Benefits -->
+        <div
+          class="mt-8 bg-gray-800/60 backdrop-blur-lg rounded-2xl p-4 border border-gray-600/30 animate__animated animate__fadeInUp animate__delay-2s"
+        >
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <i class="fas fa-rocket text-3xl text-blue-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">Performance</h4>
+              <p class="text-sm text-gray-300">
+                Optimized execution with built-in caching and efficient request
+                processing
+              </p>
+            </div>
+            <div>
+              <i class="fas fa-shield-alt text-3xl text-emerald-400 mb-3"></i>
+              <h4 class="text-lg font-semibold text-white mb-2">Security</h4>
+              <p class="text-sm text-gray-300">
+                Layered security with guards, validation, and authentication
+                patterns
+              </p>
+            </div>
+            <div>
+              <i
+                class="fas fa-expand-arrows-alt text-3xl text-purple-400 mb-3"
+              ></i>
+              <h4 class="text-lg font-semibold text-white mb-2">Scalability</h4>
+              <p class="text-sm text-gray-300">
+                Modular architecture that grows with your application needs
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-12 text-gray-500 text-sm">
+      International JavaScript Conference NYC 2025
+    </div>
+  </body>
+</html>

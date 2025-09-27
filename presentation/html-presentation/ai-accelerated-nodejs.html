@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Accelerated Node.js Development</title>
+
+    <!--
+    COLOR DESIGN REFERENCE FOR PRESENTATION
+
+    Current Theme: Green gradient background with enhanced glassmorphism
+
+    ACCESSIBLE COLOR COMBINATIONS (WCAG AA/AAA Compliant):
+
+    Primary Colors:
+    - Primary Dark (#0D47A1) on White (#FFFFFF) - AAA
+    - Primary Medium (#1976D2) on Light (#E3F2FD) - AA
+    - Primary Light (#64B5F6) on Dark (#073A8C) - AAA
+
+    Secondary/Accent Colors:
+    - Secondary Dark (#42198B) on White (#FFFFFF) - AA
+    - Tertiary Dark (#04403B) on White (#FFFFFF) - AA
+    - Accent Dark (#9F1240) on White (#FFFFFF) - AA
+
+    Semantic Colors:
+    - Success Enhanced (#16A34A) on White (#FFFFFF) - AA
+    - Error Enhanced (#DC2626) on White (#FFFFFF) - AA
+    - Warning Enhanced (#D97706) on Dark (#0F172A) - AAA
+    - Info Enhanced (#1976D2) on White (#FFFFFF) - AA
+
+    Color Harmony Patterns:
+    - Monochromatic: Different shades of primary blue for subtle harmony
+    - Complementary: Blue primary with accent pink/red for high contrast
+    - Analogous: Blue, teal, and purple for smooth transitions
+
+    Current Implementation:
+    - Background: Green gradient (maintaining brand consistency)
+    - Cards: Enhanced white glassmorphism (rgba(255,255,255,0.25))
+    - Icons: White with drop shadows for contrast
+    - Text: White on dark backgrounds, dark on light backgrounds
+
+    Future Enhancements:
+    - Consider adding accent colors for icons (blue, teal, purple)
+    - Implement color-coded sections (e.g., blue for technical, green for benefits)
+    - Use complementary colors for call-to-action elements
+    -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #2d5a27 0%,
+          #68a063 50%,
+          #3c873a 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      /* Glassmorphic Base Styles */
+      .glass {
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      .glass-strong {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 25px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .glass-subtle {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 15px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Slide Container */
+      .slide {
+        min-height: 100vh;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 3rem 2rem 4rem 2rem;
+        position: relative;
+        scroll-snap-align: start;
+      }
+
+      .slide.active {
+        display: flex;
+      }
+
+      .slide-content {
+        max-width: 1200px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 10rem);
+      }
+
+      .slide-header {
+        flex-shrink: 0;
+        margin-bottom: 3rem;
+      }
+
+      .slide-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Navigation Arrows */
+      .nav-arrows {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .nav-arrow {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-arrow:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-arrow:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .nav-arrow:disabled:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Code Block Styles - Enhanced width with dark background */
+      .code-example {
+        background: rgba(15, 23, 42, 0.95); /* Dark slate background */
+        border: 1px solid rgba(104, 211, 145, 0.4);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: -6rem;
+        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+        font-size: 1rem;
+        line-height: 1.6;
+        overflow-x: auto;
+        backdrop-filter: blur(15px);
+        width: 180%; /* Slightly reduced for better container fit */
+        max-width: 85vw; /* Better viewport constraint */
+        margin-left: -70%; /* Adjusted offset for proper centering */
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .code-example-right {
+        margin-left: -5% !important; /* Adjusted offset for proper centering */
+        margin-top: -10rem !important;
+      }
+
+      .code-example pre {
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+        color: #e2e8f0;
+        white-space: pre;
+        word-wrap: normal;
+        overflow-x: auto;
+      }
+
+      .interactive-demo {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .interactive-demo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(104, 211, 145, 0.2);
+      }
+
+      .demo-label {
+        position: absolute;
+        top: -8px;
+        right: 8px;
+        background: rgba(104, 211, 145, 0.8);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+
+      /* Typography */
+      .title-main {
+        font-size: 4rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+      }
+
+      .subtitle {
+        font-size: 1.75rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 2rem;
+      }
+
+      .slide-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 2rem;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .slide-subtitle {
+        font-size: 1.75rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 3rem;
+        line-height: 1.6;
+      }
+
+      /* Content Cards */
+      .content-grid {
+        display: grid;
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .content-grid.grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid.grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .content-grid.grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .content-grid.grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .content-grid.grid-6 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .content-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: left;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .content-card:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Elegant glass cards with perfect presentation visibility */
+      .card-solid {
+        background: rgba(255, 255, 255, 0.6);
+        color: #1a1a1a;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+
+      .card-solid:hover {
+        background: rgba(255, 255, 255, 0.45);
+        transform: translateY(-5px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+      }
+
+      .card-title-dark {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 0 8px rgba(255, 255, 255, 0.4);
+      }
+
+      .card-text-dark {
+        color: #2d2d2d;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        font-weight: 500;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+        color: #ffffff;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        font-weight: 900;
+      }
+
+      /* Accessible colored icons with improved contrast and definition */
+      .card-icon-primary {
+        color: #64B5F6; /* Light blue - AA compliant on green background */
+        text-shadow: 0 0 30px rgba(50, 50, 50, 1), 0 0 10px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(100, 181, 246, 0.5));
+        font-weight: 900;
+      }
+
+      .card-icon-secondary {
+        color: #B084FA; /* Light purple - AA compliant on green background */
+        text-shadow: 0 0 30px rgba(50, 50, 50, 1), 0 0 10px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(176, 132, 250, 0.5));
+        font-weight: 900;
+      }
+
+      .card-icon-tertiary {
+        color: #39CDBF; /* Light teal - AA compliant on green background */
+        text-shadow: 0 0 30px rgba(50, 50, 50, 1), 0 0 10px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(57, 205, 191, 0.5));
+        font-weight: 900;
+      }
+
+      .card-icon-accent {
+        color: #FDA4B7; /* Light pink - AA compliant on green background */
+        text-shadow: 0 0 30px rgba(50, 50, 50, 1), 0 0 10px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(253, 164, 183, 0.5));
+        font-weight: 900;
+      }
+
+      .card-icon-warning {
+        color: #FCD34D; /* Light yellow - AA compliant on green background */
+        text-shadow: 0 0 30px rgba(50, 50, 50, 1), 0 0 10px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(252, 211, 77, 0.5));
+        font-weight: 900;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-text {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-2px);
+        }
+      }
+
+      .floating {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Hamburger Menu */
+      .nav-menu {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1000;
+      }
+
+      .nav-toggle {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-toggle:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(1.05);
+      }
+
+      .nav-panel {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 16px;
+        padding: 1rem;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      }
+
+      .nav-panel.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .nav-panel-header {
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.5rem;
+      }
+
+      .nav-dot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-dot:hover,
+      .nav-dot.active {
+        background: rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .title-main {
+          font-size: 2.5rem;
+        }
+        .slide-title {
+          font-size: 2rem;
+        }
+        .subtitle {
+          font-size: 1.25rem;
+        }
+        .slide {
+          padding: 2rem 1rem;
+        }
+        .content-grid.grid-2,
+        .content-grid.grid-3,
+        .content-grid.grid-4,
+        .content-grid.grid-5,
+        .content-grid.grid-6 {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+        }
+        .nav-grid {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+
+      /* Scroll Snap */
+      html {
+        scroll-snap-type: y mandatory;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hamburger Navigation Menu -->
+    <div class="nav-menu">
+      <div class="nav-toggle" id="nav-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="nav-panel" id="nav-panel">
+        <div class="nav-panel-header">Quick Navigation</div>
+        <div class="nav-grid">
+          <a href="#slide-1" class="nav-dot" data-slide="1">1</a>
+          <a href="#slide-2" class="nav-dot" data-slide="2">2</a>
+          <a href="#slide-3" class="nav-dot" data-slide="3">3</a>
+          <a href="#slide-4" class="nav-dot" data-slide="4">4</a>
+          <a href="#slide-5" class="nav-dot" data-slide="5">5</a>
+          <a href="#slide-6" class="nav-dot" data-slide="6">6</a>
+          <a href="#slide-7" class="nav-dot" data-slide="7">7</a>
+          <a href="#slide-8" class="nav-dot" data-slide="8">8</a>
+          <a href="#slide-9" class="nav-dot" data-slide="9">9</a>
+          <a href="#slide-10" class="nav-dot" data-slide="10">10</a>
+          <a href="#slide-11" class="nav-dot" data-slide="11">11</a>
+          <a href="#slide-12" class="nav-dot" data-slide="12">12</a>
+          <a href="#slide-13" class="nav-dot" data-slide="13">13</a>
+          <a href="#slide-14" class="nav-dot" data-slide="14">14</a>
+          <a href="#slide-15" class="nav-dot" data-slide="15">15</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 1: Title Slide -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-content">
+        <div class="glass-strong p-12 floating">
+          <div class="flex items-center justify-center gap-6 mb-8">
+            <div class="text-9xl">
+              <i class="fab fa-node-js text-green-400"></i>
+            </div>
+            <div class="text-6xl">+</div>
+            <div class="text-9xl text-blue-400">
+              <i class="fas fa-robot"></i>
+            </div>
+          </div>
+          <h1 class="title-main">AI-Accelerated Node.js Development</h1>
+          <p class="subtitle">
+            Faster, Cleaner, More Maintainable Code with Copilot or Claude or Augment 
+          </p>
+          <div class="card-solid p-12 mt-24">
+            <div class="grid grid-cols-1 mb-4 md:grid-cols-2 gap-4 text-center">
+              <div>
+                <p class="text-3xl mb-4 text-black font-medium">Tyler Steck</p>
+                <p class="text-sm text-green-700">Packsize International</p>
+              </div>
+              <div>
+                <p class="text-3xl mb-4 text-black font-medium">Lucas Kamakura</p>
+                <p class="text-sm text-green-700">Augment Code</p>
+              </div>
+            </div>
+            <p class="text-2xl text-gray-800 mt-8 text-center">
+              International JavaScript Conference NYC 2025
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Why This Session Matters -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <h2 class="slide-title">Why This Session Matters</h2>
+        <p class="slide-subtitle">
+          Node.js developers face real challenges that AI can help solve
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3 class="card-title-dark">Repetitive Tasks</h3>
+            <p class="card-text-dark">
+              Boilerplate and debugging consume valuable time
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3 class="card-title-dark">Legacy Systems</h3>
+            <p class="card-text-dark">
+              Outdated codebases slow productivity
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h3 class="card-title-dark">AI Promise</h3>
+            <p class="card-text-dark">
+              Speed requires proper workflows
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="card-title-dark">Practical Solutions</h3>
+            <p class="card-text-dark">
+              Real AI + Node.js productivity gains
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Where AI Adds Value -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <h2 class="slide-title">Where AI Adds Value in Node.js</h2>
+        <p class="slide-subtitle">
+          Strategic areas where AI can accelerate your development workflow
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3 class="card-title-dark">Scaffolding Applications</h3>
+            <p class="card-text-dark">
+              Generate complete NestJS modules, Express middleware, and Fastify plugins
+              <!-- <br><small class="text-green-600">⚡ 80% faster project setup</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3 class="card-title-dark">Refactoring Legacy Code</h3>
+            <p class="card-text-dark">
+              Transform callbacks → async/await, implement service patterns
+              <!-- <br><small class="text-green-600">📈 60% reduction in technical debt</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Tests & Documentation</h3>
+            <p class="card-text-dark">
+              Auto-generate Jest tests, OpenAPI specs, and inline docs
+              <!-- <br><small class="text-green-600">🎯 90% test coverage achieved faster</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Performance & Security</h3>
+            <p class="card-text-dark">
+              Detect SQL injection, memory leaks, and performance bottlenecks
+              <!-- <br><small class="text-green-600">🔒 50% fewer security vulnerabilities</small> -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: AI Isn't Magic - The Pitfalls -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <h2 class="slide-title">AI Isn't Magic – The Pitfalls</h2>
+        <p class="slide-subtitle">
+          Understanding the limitations and risks of AI-assisted development
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <div class="glass-strong p-8">
+            <h3 class="text-2xl font-bold text-green-300 mb-4">
+              <i class="fas fa-magic mr-3"></i>AI Power
+            </h3>
+            <div class="space-y-4">
+              <div class="card-solid">
+                <p class="card-text-dark">✨ Rapid code generation</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">🚀 Pattern recognition</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">⚡ Productivity boost</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-strong p-8">
+            <h3 class="text-2xl font-bold text-red-300 mb-4">
+              <i class="fas fa-exclamation-triangle mr-3"></i>AI Dangers
+            </h3>
+            <div class="space-y-4">
+              <div class="card-solid">
+                <h4 class="card-title-dark text-red-600">Hallucinations</h4>
+                <p class="card-text-dark">Wrong code that looks right</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark text-red-600">Overconfidence</h4>
+                <p class="card-text-dark">Skipping code reviews</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark text-red-600">Context Loss</h4>
+                <p class="card-text-dark">Struggles in large monoliths</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark text-red-600">Security Risks</h4>
+                <p class="card-text-dark">Secrets or unsafe snippets</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Key Principle -->
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <h2 class="slide-title">
+          Key Principle → AI as a Pair, Not a Replacement
+        </h2>
+        <p class="slide-subtitle">
+          The perfect partnership between human intelligence and AI capabilities
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+          <div class="glass-strong p-8 text-center">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-blue-300 mb-6">Developers</h3>
+            <div class="space-y-4">
+              <div class="card-solid">
+                <p class="card-text-dark">🧠 Guide and architect solutions</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">👀 Review and refine code</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">🎯 Make strategic decisions</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">🔍 Ensure quality and security</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-strong p-8 text-center">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-purple-300 mb-6">AI</h3>
+            <div class="space-y-4">
+              <div class="card-solid">
+                <p class="card-text-dark">⚡ Handle boilerplate code</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">🔄 Automate repetitive patterns</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">📚 Suggest best practices</p>
+              </div>
+              <div class="card-solid">
+                <p class="card-text-dark">🔧 Integrate with SDLC</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-solid p-6 mt-8">
+          <p class="text-xl text-center text-black">
+            <i class="fas fa-plus text-blue-600 mx-4"></i>
+            Productivity Boost = Integration with Development Lifecycle
+            <i class="fas fa-plus text-blue-600 mx-4"></i>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: AI for Project Kickstarts -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <h2 class="slide-title">AI for Project Kickstarts</h2>
+        <p class="slide-subtitle">
+          Launch projects faster with intelligent scaffolding
+        </p>
+
+        <div class="text-center mb-8">
+          <div class="card-icon card-icon-accent">
+            <i class="fas fa-rocket text-6xl"></i>
+          </div>
+        </div>
+
+        <div class="content-grid grid-3">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="card-title-dark">Project Structures</h3>
+            <p class="card-text-dark">
+              Generate complete scaffolding with best practices
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-cubes"></i>
+            </div>
+            <h3 class="card-title-dark">Architecture Patterns</h3>
+            <p class="card-text-dark">
+              Implement modular, scalable, and maintainable patterns
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="card-title-dark">Focus on Logic</h3>
+            <p class="card-text-dark">
+              Domain logic over infrastructure plumbing
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: AI for Refactoring Legacy Code -->
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <h2 class="slide-title">AI for Refactoring Legacy Code</h2>
+        <p class="slide-subtitle">
+          Transform legacy codebases with intelligent modernization
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <div class="glass-strong p-8 interactive-demo" id="before-demo">
+            <div class="demo-label">Click to view code</div>
+            <h3 class="text-2xl font-bold text-red-300 mb-6">
+              <i class="fas fa-exclamation-triangle mr-3"></i>Before
+            </h3>
+            <div class="space-y-4" id="before-content">
+              <div class="card-solid">
+                <h4 class="card-title-dark">Callback Hell</h4>
+                <p class="card-text-dark">Nested callbacks making code unreadable</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark">Inline Queries</h4>
+                <p class="card-text-dark">Database logic scattered throughout</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark">Inconsistent Patterns</h4>
+                <p class="card-text-dark">Mixed validation and error handling</p>
+              </div>
+            </div>
+            <div class="code-example" id="before-code" style="display: none;">
+              <pre><code class="language-javascript">// Legacy Node.js approach
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+
+  // Nested callbacks and inline validation
+  if (!userId || isNaN(userId)) {
+    return res.status(400).json({ error: 'Invalid ID' });
+  }
+
+  db.query('SELECT * FROM users WHERE id = ?', [userId], (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    db.query('SELECT * FROM posts WHERE user_id = ?', [userId], (err, posts) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+
+      res.json({ user: user[0], posts: posts });
+    });
+  });
+});</code></pre>
+            </div>
+          </div>
+
+          <div class="glass-strong p-8 interactive-demo" id="after-demo">
+            <div class="demo-label">Click to view code</div>
+            <h3 class="text-2xl font-bold text-green-300 mb-6">
+              <i class="fas fa-check-circle mr-3"></i>After
+            </h3>
+            <div class="space-y-4" id="after-content">
+              <div class="card-solid">
+                <h4 class="card-title-dark">Async/Await</h4>
+                <p class="card-text-dark">Clean, readable asynchronous code</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark">Service + Repository</h4>
+                <p class="card-text-dark">Proper separation of concerns</p>
+              </div>
+              <div class="card-solid">
+                <h4 class="card-title-dark">Best Practices</h4>
+                <p class="card-text-dark">
+                  Consistent validation and error handling
+                </p>
+              </div>
+            </div>
+            <div class="code-example code-example-right" id="after-code" style="display: none;">
+              <pre><code class="language-typescript">// Modern NestJS approach
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get(':id')
+  async findUserWithPosts(@Param('id', ParseIntPipe) id: number) {
+    try {
+      const user = await this.usersService.findOneWithPosts(id);
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      return user;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to fetch user');
+    }
+  }
+}
+
+@Injectable()
+export class UsersService {
+  constructor(private readonly usersRepository: UsersRepository) {}
+
+  async findOneWithPosts(id: number): Promise<UserWithPosts> {
+    return this.usersRepository.findOneWithPosts(id);
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-solid p-6 mt-8">
+          <p class="text-lg text-center text-black">
+            <i class="fas fa-lightbulb text-yellow-600 mr-3"></i>
+            AI suggests → Developers enforce best practices
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: AI for Testing & Documentation -->
+    <section class="slide" id="slide-8">
+      <div class="slide-content">
+        <h2 class="slide-title">AI for Testing & Documentation</h2>
+        <p class="slide-subtitle">
+          Automate the tedious, focus on the creative
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-vial"></i>
+            </div>
+            <h3 class="card-title-dark">Jest Unit Tests</h3>
+            <p class="card-text-dark">
+              Auto-generate test suites with edge cases and mocking
+              <!-- <br><small class="text-green-600">🔧 Tools: GitHub Copilot, Augment</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="card-title-dark">API Documentation</h3>
+            <p class="card-text-dark">
+              Create Swagger/OpenAPI docs automatically from your code
+              <!-- <br><small class="text-green-600">📚 Tools: Copilot Chat, Augment</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3 class="card-title-dark">Inline Comments</h3>
+            <p class="card-text-dark">
+              Generate meaningful comments for complex business logic
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="card-title-dark">Always Review</h3>
+            <p class="card-text-dark">
+              Generated content still should receive human validation
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: AI in CI/CD Workflows -->
+    <section class="slide" id="slide-9">
+      <div class="slide-content">
+        <h2 class="slide-title">AI in CI/CD Workflows</h2>
+        <p class="slide-subtitle">
+          Intelligent automation throughout your development pipeline
+        </p>
+
+        <div class="content-grid grid-4">
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-primary">
+                <i class="fas fa-clipboard-list"></i>
+              </div>
+              <h3 class="card-title-dark">Release Notes</h3>
+              <p class="card-text-dark">
+                Auto-generate from PRs and commits
+              </p>
+            </div>
+
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-secondary">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3 class="card-title-dark">Pipeline Fixes</h3>
+              <p class="card-text-dark">
+                Suggest fixes for build failures
+              </p>
+            </div>
+
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-tertiary">
+                <i class="fas fa-vial"></i>
+              </div>
+              <h3 class="card-title-dark">Flaky Tests</h3>
+              <p class="card-text-dark">
+                Detect and stabilize unstable tests
+              </p>
+            </div>
+
+            <div class="card-solid text-center cursor-pointer" onclick="window.open('https://github.com/steckdev/the-pollinator-nestjs-react/actions', '_blank')">
+              <div class="card-icon card-icon-accent">
+                <i class="fab fa-github"></i>
+              </div>
+              <h3 class="card-title-dark">GitHub Integration</h3>
+              <p class="card-text-dark">
+                GitHub Actions and Copilot Chat
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Node.js Practices AI Works Well With -->
+    <section class="slide" id="slide-10">
+      <div class="slide-content">
+        <h2 class="slide-title">Node.js Practices AI Works Well With</h2>
+        <p class="slide-subtitle">
+          Optimize your codebase for better AI assistance
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fab fa-js-square"></i>
+            </div>
+            <h3 class="card-title-dark">TypeScript-First</h3>
+            <p class="card-text-dark">
+              Better type inference for accurate AI suggestions
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-cubes"></i>
+            </div>
+            <h3 class="card-title-dark">Modular Design</h3>
+            <p class="card-text-dark">
+              Smaller context windows for better AI understanding
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-sitemap"></i>
+            </div>
+            <h3 class="card-title-dark">Domain Separation</h3>
+            <p class="card-text-dark">
+              Clear boundaries for relevant AI suggestions
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-check-double"></i>
+            </div>
+            <h3 class="card-title-dark">Consistent Linting</h3>
+            <p class="card-text-dark">
+              Predictable formatting for clean AI code
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: For Developers -->
+    <section class="slide" id="slide-11">
+      <div class="slide-content">
+        <h2 class="slide-title">For Developers</h2>
+        <p class="slide-subtitle">
+          How AI transforms your daily development experience
+        </p>
+
+        <div class="content-grid grid-4">
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-primary">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3 class="card-title-dark">Less Boilerplate</h3>
+              <p class="card-text-dark">
+                More problem-solving, less repetitive coding
+              </p>
+            </div>
+
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-secondary">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <h3 class="card-title-dark">Faster Onboarding</h3>
+              <p class="card-text-dark">
+                Quickly understand unfamiliar codebases
+              </p>
+            </div>
+
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-tertiary">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <h3 class="card-title-dark">Creative Problem-Solving</h3>
+              <p class="card-text-dark">
+                Focus on architecture and innovation
+              </p>
+            </div>
+
+            <div class="card-solid text-center">
+              <div class="card-icon card-icon-accent">
+                <i class="fas fa-comments"></i>
+              </div>
+              <h3 class="card-title-dark">AI Rubber Duck</h3>
+              <p class="card-text-dark">
+                Debugging with superpowers and suggestions
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 12: For Leaders -->
+    <section class="slide" id="slide-12">
+      <div class="slide-content">
+        <h2 class="slide-title">For Leaders</h2>
+        <p class="slide-subtitle">
+          The business impact of AI-accelerated development
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Speed Without Sacrifice</h3>
+            <p class="card-text-dark">
+              Faster delivery while maintaining quality
+              <!-- <br><small class="text-green-600">📊 30-50% faster development cycles</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="card-title-dark">Team Consistency</h3>
+            <p class="card-text-dark">
+              Standardized patterns across all projects
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-shipping-fast"></i>
+            </div>
+            <h3 class="card-title-dark">Faster Features</h3>
+            <p class="card-text-dark">
+              Accelerated delivery and reduced time-to-market
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="card-title-dark">Better Morale</h3>
+            <p class="card-text-dark">
+              Improved satisfaction through reduced tedious work
+              <!-- <br><small class="text-green-600">💝 25% improvement in satisfaction</small> -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 13: Business Implementation Strategy -->
+    <section class="slide" id="slide-13">
+      <div class="slide-content">
+        <h2 class="slide-title">Business Implementation Strategy</h2>
+        <p class="slide-subtitle">
+          Proposing AI adoption with security, compliance, and risk management
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Security First</h3>
+            <p class="card-text-dark">
+              Code review policies, secret scanning, and audit trails
+              <!-- <br><small class="text-green-600">🔒 Zero-trust AI integration</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3 class="card-title-dark">Compliance Ready</h3>
+            <p class="card-text-dark">
+              SOC2, GDPR, and industry-specific regulatory alignment
+              <!-- <br><small class="text-green-600">📋 Audit-friendly workflows</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="card-title-dark">Phased Rollout</h3>
+            <p class="card-text-dark">
+              Start with low-risk tasks, measure impact, scale gradually
+              <!-- <br><small class="text-green-600">📈 Risk-managed adoption</small> -->
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-users-cog"></i>
+            </div>
+            <h3 class="card-title-dark">Team Training</h3>
+            <p class="card-text-dark">
+              AI literacy, best practices, and governance training
+              <!-- <br><small class="text-green-600">🎓 Responsible AI usage</small> -->
+            </p>
+          </div>
+        </div>
+
+        <div class="card-solid p-6 mt-8">
+          <p class="text-xl text-center text-black">
+            <i class="fas fa-balance-scale text-blue-600 mx-3"></i>
+            Innovation + Security + Compliance = Sustainable AI Advantage
+            <i class="fas fa-balance-scale text-blue-600 mx-3"></i>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: AI + Node.js Workflow Mindset -->
+    <section class="slide" id="slide-14">
+      <div class="slide-content">
+        <h2 class="slide-title">AI + Node.js Workflow Mindset</h2>
+        <p class="slide-subtitle">
+          The path to successful AI adoption in your development process
+        </p>
+
+        <div class="content-grid grid-3">
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <h3 class="card-title-dark">Start Small</h3>
+            <p class="card-text-dark mb-3">Week 1-2</p>
+            <div class="space-y-2">
+              <p class="card-text-dark">• Scaffolding</p>
+              <p class="card-text-dark">• Documentation</p>
+              <p class="card-text-dark">• Basic tests</p>
+            </div>
+          </div>
+
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Expand</h3>
+            <p class="card-text-dark mb-3">Month 1-3</p>
+            <div class="space-y-2">
+              <p class="card-text-dark">• Refactoring</p>
+              <p class="card-text-dark">• CI/CD integration</p>
+              <p class="card-text-dark">• Complex patterns</p>
+            </div>
+          </div>
+
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Discipline</h3>
+            <p class="card-text-dark mb-3">Always</p>
+            <div class="space-y-2">
+              <p class="card-text-dark">• Human oversight</p>
+              <p class="card-text-dark">• Code reviews</p>
+              <p class="card-text-dark">• Quality gates</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-solid p-6 mt-8">
+          <p class="text-xl text-center text-black">
+            <i class="fas fa-plus text-blue-600 mx-3"></i>
+            AI + Node.js = Productivity Boost with Discipline
+            <i class="fas fa-plus text-blue-600 mx-3"></i>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: Call to Action -->
+    <section class="slide" id="slide-15">
+      <div class="slide-content">
+        <h2 class="slide-title">Call to Action</h2>
+        <p class="slide-subtitle">
+          Start your AI-accelerated Node.js journey today
+        </p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-play"></i>
+            </div>
+            <h3 class="card-title-dark">Try It Now</h3>
+            <p class="card-text-dark">
+              Start with your next refactor or project
+            </p>
+          </div>
+
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-gavel"></i>
+            </div>
+            <h3 class="card-title-dark">Define Rules</h3>
+            <p class="card-text-dark">
+              Set team guidelines for AI usage
+            </p>
+          </div>
+
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-share"></i>
+            </div>
+            <h3 class="card-title-dark">Share Patterns</h3>
+            <p class="card-text-dark">
+              Document successful AI patterns
+            </p>
+          </div>
+
+          <div class="card-solid text-center">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-balance-scale"></i>
+            </div>
+            <h3 class="card-title-dark">Remember</h3>
+            <p class="card-text-dark">
+              AI is here to accelerate, not replace
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: Thank You -->
+    <section class="slide" id="slide-15">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h2 class="slide-title">Thank You!</h2>
+          <p class="slide-subtitle">Questions & Discussion</p>
+        </div>
+
+        <div class="slide-body">
+          <div class="glass-strong p-12">
+            <div class="card-icon text-center mb-8">
+              <i class="fas fa-heart text-9xl text-green-600 floating active"></i>
+            </div>
+
+            <div class="text-center">
+              <h3 class="text-3xl font-bold text-white mb-6">
+                AI is here to accelerate, not replace
+              </h3>
+              <p class="text-2xl text-gray-200 mb-8">
+                Let's build the future of Node.js development together
+              </p>
+
+              <div class="card-solid p-6 inline-block">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                  <div>
+                    <p class="text-3xl text-black font-medium">Tyler Steck</p>
+                    <p class="text-xl text-green-700 mb-2">
+                      Packsize International
+                    </p>
+                    <div class="flex justify-center gap-2">
+                      <i class="fab fa-twitter text-green-600 text-lg"></i>
+                      <i class="fab fa-linkedin text-green-600 text-lg"></i>
+                      <i class="fab fa-github text-green-600 text-lg"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-3xl text-black font-medium">Lucas Kamakura</p>
+                    <p class="text-xl text-green-700 mb-2">Augment Code</p>
+                    <div class="flex justify-center gap-2">
+                      <i class="fab fa-twitter text-green-600 text-lg"></i>
+                      <i class="fab fa-linkedin text-green-600 text-lg"></i>
+                      <i class="fab fa-github text-green-600 text-lg"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-2xl text-gray-800 mt-8">
+                  International JavaScript Conference NYC 2025
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+      <button class="nav-arrow" id="prev-arrow" title="Previous Slide">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="nav-arrow" id="next-arrow" title="Next Slide">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <script>
+      // Enhanced Navigation with Deep Linking
+      class PresentationController {
+        constructor() {
+          this.slides = document.querySelectorAll(".slide");
+          this.prevArrow = document.getElementById("prev-arrow");
+          this.nextArrow = document.getElementById("next-arrow");
+          this.navToggle = document.getElementById("nav-toggle");
+          this.navPanel = document.getElementById("nav-panel");
+          this.navDots = document.querySelectorAll(".nav-dot");
+          this.currentSlide = 0;
+          this.totalSlides = this.slides.length;
+
+          this.init();
+        }
+
+        init() {
+          this.setupIntersectionObserver();
+          this.setupKeyboardNavigation();
+          this.setupDeepLinking();
+          this.setupNavDots();
+          this.setupHamburgerMenu();
+          this.setupNavigationArrows();
+          this.setupInteractiveDemos();
+          this.handleInitialHash();
+          this.updateNavigation();
+        }
+
+        setupIntersectionObserver() {
+          const observer = new IntersectionObserver(
+            entries => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const slideIndex = Array.from(this.slides).indexOf(
+                    entry.target
+                  );
+                  this.setCurrentSlide(slideIndex);
+                }
+              });
+            },
+            { threshold: 0.5 }
+          );
+
+          this.slides.forEach(slide => observer.observe(slide));
+        }
+
+        setupKeyboardNavigation() {
+          document.addEventListener("keydown", e => {
+            switch (e.key) {
+              case "ArrowDown":
+              case " ":
+              case "PageDown":
+                e.preventDefault();
+                this.nextSlide();
+                break;
+              case "ArrowUp":
+              case "PageUp":
+                e.preventDefault();
+                this.previousSlide();
+                break;
+              case "Home":
+                e.preventDefault();
+                this.goToSlide(0);
+                break;
+              case "End":
+                e.preventDefault();
+                this.goToSlide(this.totalSlides - 1);
+                break;
+              case "f":
+              case "F11":
+                e.preventDefault();
+                this.toggleFullscreen();
+                break;
+            }
+          });
+        }
+
+        setupDeepLinking() {
+          // Handle hash changes for deep linking
+          window.addEventListener("hashchange", () => {
+            this.handleHashChange();
+          });
+
+          // Update URL when slide changes
+          window.addEventListener("slidechange", e => {
+            const slideId = `slide-${e.detail.slideNumber + 1}`;
+            if (window.location.hash !== `#${slideId}`) {
+              history.replaceState(null, null, `#${slideId}`);
+            }
+          });
+        }
+
+        setupNavDots() {
+          this.navDots.forEach((dot, index) => {
+            dot.addEventListener("click", e => {
+              e.preventDefault();
+              this.goToSlide(index);
+              this.closeNavPanel();
+            });
+          });
+        }
+
+        setupHamburgerMenu() {
+          this.navToggle.addEventListener("click", () => {
+            this.toggleNavPanel();
+          });
+
+          // Close menu when clicking outside
+          document.addEventListener("click", e => {
+            if (
+              !this.navToggle.contains(e.target) &&
+              !this.navPanel.contains(e.target)
+            ) {
+              this.closeNavPanel();
+            }
+          });
+
+          // Close menu on escape key
+          document.addEventListener("keydown", e => {
+            if (e.key === "Escape") {
+              this.closeNavPanel();
+            }
+          });
+        }
+
+        toggleNavPanel() {
+          this.navPanel.classList.toggle("active");
+        }
+
+        closeNavPanel() {
+          this.navPanel.classList.remove("active");
+        }
+
+        setupNavigationArrows() {
+          this.prevArrow.addEventListener("click", () => {
+            this.previousSlide();
+          });
+
+          this.nextArrow.addEventListener("click", () => {
+            this.nextSlide();
+          });
+        }
+
+        setupInteractiveDemos() {
+          const beforeDemo = document.getElementById("before-demo");
+          const afterDemo = document.getElementById("after-demo");
+
+          if (beforeDemo) {
+            beforeDemo.addEventListener("click", () => {
+              this.toggleCodeExample("before");
+            });
+          }
+
+          if (afterDemo) {
+            afterDemo.addEventListener("click", () => {
+              this.toggleCodeExample("after");
+            });
+          }
+        }
+
+        toggleCodeExample(type) {
+          const content = document.getElementById(`${type}-content`);
+          const code = document.getElementById(`${type}-code`);
+
+          if (content && code) {
+            if (code.style.display === "none") {
+              content.style.display = "none";
+              code.style.display = "block";
+              // Initialize Prism highlighting
+              if (window.Prism) {
+                window.Prism.highlightAllUnder(code);
+              }
+            } else {
+              content.style.display = "block";
+              code.style.display = "none";
+            }
+          }
+        }
+
+        previousSlide() {
+          if (this.currentSlide > 0) {
+            this.goToSlide(this.currentSlide - 1);
+          }
+        }
+
+        nextSlide() {
+          if (this.currentSlide < this.totalSlides - 1) {
+            this.goToSlide(this.currentSlide + 1);
+          }
+        }
+
+        handleInitialHash() {
+          const hash = window.location.hash;
+          if (hash) {
+            const slideMatch = hash.match(/slide-(\d+)/);
+            if (slideMatch) {
+              const slideNumber = parseInt(slideMatch[1]) - 1;
+              if (slideNumber >= 0 && slideNumber < this.totalSlides) {
+                setTimeout(() => this.goToSlide(slideNumber), 100);
+              }
+            }
+          }
+        }
+
+        handleHashChange() {
+          const hash = window.location.hash;
+          if (hash) {
+            const slideMatch = hash.match(/slide-(\d+)/);
+            if (slideMatch) {
+              const slideNumber = parseInt(slideMatch[1]) - 1;
+              if (slideNumber >= 0 && slideNumber < this.totalSlides) {
+                this.goToSlide(slideNumber, false);
+              }
+            }
+          }
+        }
+
+        setCurrentSlide(slideIndex) {
+          this.currentSlide = slideIndex;
+          this.updateNavigation();
+
+          // Dispatch custom event for deep linking
+          window.dispatchEvent(
+            new CustomEvent("slidechange", {
+              detail: { slideNumber: slideIndex },
+            })
+          );
+        }
+
+        updateNavigation() {
+          // Update nav dots
+          this.navDots.forEach((dot, index) => {
+            dot.classList.toggle("active", index === this.currentSlide);
+          });
+
+          // Update arrow states
+          if (this.prevArrow) {
+            this.prevArrow.disabled = this.currentSlide === 0;
+          }
+
+          if (this.nextArrow) {
+            this.nextArrow.disabled = this.currentSlide === this.totalSlides - 1;
+          }
+        }
+
+        goToSlide(slideIndex, updateHash = true) {
+          if (slideIndex >= 0 && slideIndex < this.totalSlides) {
+            // Hide all slides
+            this.slides.forEach(slide => slide.classList.remove('active'));
+
+            // Show the target slide
+            this.slides[slideIndex].classList.add('active');
+
+            // Update current slide index
+            this.setCurrentSlide(slideIndex);
+
+            if (updateHash) {
+              const slideId = `slide-${slideIndex + 1}`;
+              history.pushState(null, null, `#${slideId}`);
+            }
+          }
+        }
+
+        nextSlide() {
+          if (this.currentSlide < this.totalSlides - 1) {
+            this.goToSlide(this.currentSlide + 1);
+          }
+        }
+
+        previousSlide() {
+          if (this.currentSlide > 0) {
+            this.goToSlide(this.currentSlide - 1);
+          }
+        }
+
+        toggleFullscreen() {
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+          } else {
+            document.exitFullscreen();
+          }
+        }
+
+        // VS Code Live Preview integration
+        getDeepLink(slideNumber) {
+          const baseUrl = window.location.origin + window.location.pathname;
+          return `${baseUrl}#slide-${slideNumber + 1}`;
+        }
+
+        copySlideLink(slideNumber = this.currentSlide) {
+          const link = this.getDeepLink(slideNumber);
+          navigator.clipboard.writeText(link).then(() => {
+            console.log("Slide link copied to clipboard:", link);
+          });
+        }
+      }
+
+      // Initialize presentation controller
+      const presentation = new PresentationController();
+
+      // Global functions for external access
+      window.presentation = presentation;
+      window.goToSlide = slideNumber => presentation.goToSlide(slideNumber - 1);
+      window.copyCurrentSlideLink = () => presentation.copySlideLink();
+    </script>
+  </body>
+</html>

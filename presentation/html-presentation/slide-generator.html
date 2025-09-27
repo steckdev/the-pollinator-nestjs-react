@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="slides-config.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto p-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold mb-8 text-center">
+                <i class="fas fa-magic mr-4 text-emerald-400"></i>
+                Slide Generator
+            </h1>
+            
+            <div class="bg-gray-800 rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Create New Slide</h2>
+                
+                <form id="slide-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Slide Number</label>
+                        <input type="number" id="slide-number" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none" min="1" value="9">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Title</label>
+                        <input type="text" id="slide-title" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none" placeholder="Enter slide title">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Subtitle</label>
+                        <input type="text" id="slide-subtitle" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none" placeholder="Enter subtitle (optional)">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea id="slide-description" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none h-24" placeholder="Brief description of the slide content"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Duration (seconds)</label>
+                        <input type="number" id="slide-duration" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none" value="90">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Layout Type</label>
+                        <select id="layout-type" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none">
+                            <option value="single">Single Column</option>
+                            <option value="two-column">Two Column</option>
+                            <option value="title">Title Slide</option>
+                            <option value="code">Code Slide</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Icon (FontAwesome class)</label>
+                        <input type="text" id="slide-icon" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none" placeholder="fas fa-code" value="fas fa-code">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Key Points (one per line)</label>
+                        <textarea id="key-points" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:border-emerald-400 focus:outline-none h-32" placeholder="First key point&#10;Second key point&#10;Third key point"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded transition duration-200">
+                        <i class="fas fa-plus mr-2"></i>
+                        Generate Slide
+                    </button>
+                </form>
+            </div>
+            
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Current Slides</h2>
+                <div id="slides-list" class="space-y-2">
+                    <!-- Slides will be populated here -->
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="master-slides.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded transition duration-200 inline-block">
+                    <i class="fas fa-play mr-2"></i>
+                    Open Presentation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SlideGenerator {
+            constructor() {
+                this.config = window.SLIDES_CONFIG || {};
+                this.init();
+            }
+            
+            init() {
+                this.loadSlidesList();
+                document.getElementById('slide-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.generateSlide();
+                });
+            }
+            
+            loadSlidesList() {
+                const slidesList = document.getElementById('slides-list');
+                slidesList.innerHTML = '';
+                
+                if (this.config.slideData) {
+                    this.config.slideData.forEach(slide => {
+                        const slideItem = document.createElement('div');
+                        slideItem.className = 'flex items-center justify-between p-3 bg-gray-700 rounded';
+                        slideItem.innerHTML = `
+                            <div>
+                                <span class="font-medium">${slide.id}. ${slide.title}</span>
+                                <span class="text-gray-400 text-sm ml-2">(${slide.duration}s)</span>
+                            </div>
+                            <a href="${slide.filename}" target="_blank" class="text-emerald-400 hover:text-emerald-300">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        `;
+                        slidesList.appendChild(slideItem);
+                    });
+                }
+            }
+            
+            generateSlide() {
+                const slideNumber = document.getElementById('slide-number').value;
+                const title = document.getElementById('slide-title').value;
+                const subtitle = document.getElementById('slide-subtitle').value;
+                const description = document.getElementById('slide-description').value;
+                const duration = document.getElementById('slide-duration').value;
+                const layoutType = document.getElementById('layout-type').value;
+                const icon = document.getElementById('slide-icon').value;
+                const keyPoints = document.getElementById('key-points').value.split('\n').filter(point => point.trim());
+                
+                if (!title) {
+                    alert('Please enter a slide title');
+                    return;
+                }
+                
+                const slideHtml = this.generateSlideHTML({
+                    slideNumber,
+                    title,
+                    subtitle,
+                    description,
+                    duration,
+                    layoutType,
+                    icon,
+                    keyPoints
+                });
+                
+                this.downloadSlide(slideHtml, `page${slideNumber}.html`);
+                this.showConfigUpdate(slideNumber, title, description, duration);
+            }
+            
+            generateSlideHTML(data) {
+                const keyPointsHtml = data.keyPoints.map(point => 
+                    `<div class="flex items-center space-x-4">
+                        <i class="fas fa-arrow-right text-emerald-400 text-xl"></i>
+                        <span class="text-lg text-gray-300">${point}</span>
+                    </div>`
+                ).join('\n                    ');
+                
+                return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${data.title}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="width: 1280px; height: 720px; margin: 0; padding: 0; overflow: hidden; font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);">
+    
+    <div class="w-full h-full flex items-center justify-center p-12">
+        <div class="max-w-4xl text-center animate__animated animate__fadeInUp">
+            <div class="mb-8">
+                <i class="${data.icon} text-6xl text-emerald-400 mb-6"></i>
+                <h1 class="text-5xl font-bold text-white mb-6 leading-tight">
+                    ${data.title}
+                </h1>
+                ${data.subtitle ? `<h2 class="text-2xl text-gray-300 mb-8">${data.subtitle}</h2>` : ''}
+            </div>
+            
+            <div class="bg-gray-800/60 backdrop-blur-lg rounded-2xl p-8 border border-gray-600/30 shadow-2xl">
+                <div class="space-y-6">
+                    ${keyPointsHtml}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="absolute bottom-8 left-12 text-gray-500 text-sm">
+        International JavaScript Conference NYC 2025
+    </div>
+    
+</body>
+</html>`;
+            }
+            
+            downloadSlide(html, filename) {
+                const blob = new Blob([html], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            showConfigUpdate(slideNumber, title, description, duration) {
+                const configUpdate = `
+// Add this to your slides-config.js slideData array:
+{
+    id: ${slideNumber},
+    filename: 'page${slideNumber}.html',
+    title: '${title}',
+    description: '${description}',
+    duration: ${duration},
+    tags: ['generated']
+}`;
+                
+                alert(`Slide generated! Don't forget to update your slides-config.js file:\n\n${configUpdate}`);
+            }
+        }
+        
+        // Initialize the slide generator
+        new SlideGenerator();
+    </script>
+</body>
+</html>

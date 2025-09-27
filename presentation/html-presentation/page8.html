@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Clean Architecture Patterns in NestJS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Prism.js for syntax highlighting -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  </head>
+  <body
+    style="
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: &quot;Inter&quot;, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 50%,
+        #1f1f1f 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      class="w-full h-full flex flex-col justify-center p-4 sm:p-6 lg:p-8"
+      style="
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
+        transform: scale(1);
+      "
+    >
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="text-center mb-6 animate__animated animate__fadeInDown">
+          <h1 class="text-4xl font-bold text-gray-100 mb-4">
+            Clean Architecture Patterns
+          </h1>
+          <p class="text-2xl text-blue-400 font-medium">
+            SOLID Principles • Hexagonal Architecture • Domain-Driven Design
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-4 h-96">
+          <div
+            class="bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-4 animate__animated animate__fadeInLeft animate__delay-1s"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4"
+              >
+                <i class="fas fa-cube text-white text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-100">SOLID Principles</h3>
+            </div>
+            <div class="space-y-3 text-xl">
+              <div class="flex items-start">
+                <span
+                  class="w-6 h-6 bg-green-900 text-green-400 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5"
+                  >S</span
+                >
+                <div>
+                  <strong class="text-gray-200">Single Responsibility</strong
+                  ><br /><span class="text-gray-400"
+                    >Each service has one purpose</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span
+                  class="w-6 h-6 bg-blue-900 text-blue-400 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5"
+                  >O</span
+                >
+                <div>
+                  <strong class="text-gray-200">Open/Closed</strong><br /><span
+                    class="text-gray-400"
+                    >Extend via interfaces</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span
+                  class="w-6 h-6 bg-purple-900 text-purple-400 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5"
+                  >L</span
+                >
+                <div>
+                  <strong class="text-gray-200">Liskov Substitution</strong
+                  ><br /><span class="text-gray-400">Polymorphic behavior</span>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span
+                  class="w-6 h-6 bg-orange-900 text-orange-400 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5"
+                  >I</span
+                >
+                <div>
+                  <strong class="text-gray-200">Interface Segregation</strong
+                  ><br /><span class="text-gray-400">Focused contracts</span>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span
+                  class="w-6 h-6 bg-red-900 text-red-400 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5"
+                  >D</span
+                >
+                <div>
+                  <strong class="text-gray-200">Dependency Inversion</strong
+                  ><br /><span class="text-gray-400">Inject dependencies</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-4 animate__animated animate__fadeInUp animate__delay-2s"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4"
+              >
+                <i class="fas fa-hexagon text-white text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-100">
+                Hexagonal Architecture
+              </h3>
+            </div>
+            <div class="relative h-80 flex items-center justify-center">
+              <svg viewBox="15 15 170 170" class="w-full h-full">
+                <polygon
+                  points="100,20 170,60 170,140 100,180 30,140 30,60"
+                  fill="#3B82F6"
+                  fill-opacity="0.2"
+                  stroke="#60A5FA"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="25"
+                  fill="#10B981"
+                  fill-opacity="0.3"
+                  stroke="#34D399"
+                  stroke-width="2"
+                />
+                <text
+                  x="100"
+                  y="105"
+                  text-anchor="middle"
+                  class="text-xs font-bold fill-gray-200"
+                >
+                  Domain
+                </text>
+                <text
+                  x="100"
+                  y="55"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  Controllers
+                </text>
+                <text
+                  x="143"
+                  y="80"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  Services
+                </text>
+                <text
+                  x="145"
+                  y="125"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  DB
+                </text>
+                <text
+                  x="100"
+                  y="150"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  External APIs
+                </text>
+                <text
+                  x="55"
+                  y="125"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  Cache
+                </text>
+                <text
+                  x="55"
+                  y="80"
+                  text-anchor="middle"
+                  class="text-xs fill-gray-300"
+                >
+                  Queue
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div
+            class="bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-4 animate__animated animate__fadeInRight animate__delay-3s"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-4"
+              >
+                <i class="fas fa-layer-group text-white text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-100">
+                Domain-Driven Design
+              </h3>
+            </div>
+            <div
+              class="bg-gray-900 border border-gray-600 rounded-lg p-4 overflow-hidden"
+            >
+              <pre
+                class="text-xs"
+              ><code class="language-typescript">@Entity()
+export class User {
+  @PrimaryKey()
+  id: UserId;
+  name: UserName;
+}
+
+interface UserRepository {
+  findById(id: UserId);
+  save(user: User);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-20 bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-4 animate__animated animate__fadeInUp animate__delay-4s"
+        >
+          <h4 class="text-lg font-bold text-gray-100 mb-4 flex items-center">
+            <i class="fas fa-code text-blue-400 mr-3"></i>
+            NestJS Implementation Example
+          </h4>
+          <div
+            class="bg-gray-900 border border-gray-600 rounded-lg p-4 overflow-hidden"
+          >
+            <pre class="text-sm"><code class="language-typescript">@Injectable()
+export class UserService implements IUserService {
+  constructor(@Inject('USER_REPOSITORY') private userRepo: UserRepository) {}
+
+  async createUser(dto: CreateUserDto): Promise<User> {
+    const user = new User(dto.name, dto.email);
+    return await this.userRepo.save(user);
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- INSPIRATION: This is a technical presentation slide about Clean Architecture Patterns in NestJS. The current design uses a light theme with blue gradients and white cards. I need to transform it to a dark theme while maintaining the same layout structure and content. The dark theme should use graphite black as primary background with light gray/white as secondary colors, creating a sophisticated and professional appearance that reduces eye strain.
+
+Key elements to transform:
+- Background: Change from light gradient to dark graphite gradient
+- Cards: Transform white cards to dark gray with subtle borders
+- Text: Adjust colors for proper contrast on dark background
+- Code blocks: Already dark, may need minor adjustments
+- Icons and decorative elements: Ensure they work well with dark theme
+- Maintain the hexagonal architecture diagram and SOLID principles layout -->
