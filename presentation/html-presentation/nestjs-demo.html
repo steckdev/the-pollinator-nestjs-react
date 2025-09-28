@@ -92,7 +92,7 @@
       }
 
       .slide-content {
-        max-width: 1200px;
+        max-width: 1600px;
         width: 100%;
         text-align: center;
         color: white;
@@ -175,6 +175,7 @@
           0 12px 40px rgba(0, 0, 0, 0.6),
           0 4px 16px rgba(0, 0, 0, 0.3);
       }
+      
 
       .code-example pre {
         margin: 0;
@@ -591,7 +592,7 @@
     </section>
 
     <!-- Slide 2: The Pollinator Metaphor -->
-    <section class="slide" id="slide-2">
+    <!-- <section class="slide" id="slide-2">
       <div class="slide-content">
         <h2 class="slide-title animate__animated animate__fadeInUp">The Pollinator Metaphor</h2>
         <p class="slide-subtitle animate__animated animate__fadeInUp animate__delay-1s">
@@ -604,8 +605,8 @@
             <div class="card-icon card-icon-primary">
               <i class="fas fa-seedling"></i>
             </div>
-            <h3 class="card-title">Cross-Pollination of Ideas</h3>
-            <div class="card-text">
+            <h3 class="card-title text-3xl " >Cross-Pollination of Ideas</h3>
+            <div class="card-text text-xl">
               <p>• Dependency Injection patterns</p>
               <p>• Modular architecture design</p>
               <p>• Scalable microservices</p>
@@ -627,7 +628,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Slide 3: The Node.js Scaling Challenge -->
     <section class="slide" id="slide-3">
@@ -1002,7 +1003,7 @@ class UserService</code></pre>
           </div>
         </div>
 
-        <div class="code-example">
+        <div class="code-example" style="font-size: 1.2rem;">
           <pre><code class="language-typescript">@Injectable()
 export class UserService implements IUserService {
   constructor(@Inject('USER_REPOSITORY') private userRepo: UserRepository) {}
@@ -1105,12 +1106,6 @@ export class UserService implements IUserService {
             </div>
           </div>
         </div>
-
-        <div class="card-solid p-6 mt-8">
-          <p class="text-center text-lg font-semibold text-gray-700">
-            🎯 <strong>Key Insight:</strong> All these patterns are <em>optional</em> - use only what your application needs for clean, maintainable architecture
-          </p>
-        </div>
       </div>
     </section>
 
@@ -1150,9 +1145,8 @@ export class UserService implements IUserService {
           </div>
         </div>
 
-        <div class="code-example">
-          <pre><code class="language-typescript">// Feature Module Structure
-@Module({
+        <div class="code-example" style="font-size: 1.2rem;">
+          <pre><code class="language-typescript">@Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [
@@ -1214,26 +1208,23 @@ export class UserModule {}</code></pre>
           </div>
         </div>
 
-        <div class="code-example">
-          <pre><code class="language-typescript">// Microservice Communication
-@Injectable()
+        <div class="code-example-small">
+          <pre><code class="language-typescript">@Injectable()
 export class OrderService {
   constructor(
     @Inject('PAYMENT_SERVICE') private paymentService: ClientProxy,
     @Inject('INVENTORY_SERVICE') private inventoryService: ClientProxy
   ) {}
-
   async processOrder(order: CreateOrderDto) {
     await this.inventoryService.emit('reserve_items', order.items);
     return this.paymentService.send('process_payment', order.payment);
-  }
-}</code></pre>
+}}</code></pre>
         </div>
       </div>
     </section>
 
     <!-- Slide 12: Migration Strategy -->
-    <section class="slide" id="slide-12">
+    <!-- <section class="slide" id="slide-12">
       <div class="slide-content">
         <h2 class="slide-title">Migration Strategy & Future Roadmap</h2>
         <p class="slide-subtitle">
@@ -1282,10 +1273,10 @@ export class OrderService {
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Slide 13: Performance & Monitoring -->
-    <section class="slide" id="slide-13">
+    <!-- <section class="slide" id="slide-13">
       <div class="slide-content">
         <h2 class="slide-title">Performance & Monitoring</h2>
         <p class="slide-subtitle">
@@ -1342,7 +1333,7 @@ export class OrderService {
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Slide 14: Testing & Quality Assurance -->
     <section class="slide" id="slide-14">
@@ -1354,43 +1345,40 @@ export class OrderService {
 
         <div class="content-grid grid-3">
           <div class="card-solid">
-            <div class="card-icon card-icon-primary">
+            <!-- <div class="card-icon card-icon-primary">
               <i class="fas fa-vial"></i>
-            </div>
+            </div> -->
             <h3 class="card-title-dark">Unit Testing</h3>
             <div class="card-text-dark">
-              <p>• Jest integration</p>
               <p>• Dependency mocking</p>
               <p>• Test utilities</p>
             </div>
           </div>
 
           <div class="card-solid">
-            <div class="card-icon card-icon-secondary">
+            <!-- <div class="card-icon card-icon-secondary">
               <i class="fas fa-puzzle-piece"></i>
-            </div>
+            </div> -->
             <h3 class="card-title-dark">Integration Testing</h3>
             <div class="card-text-dark">
-              <p>• E2E test module</p>
               <p>• Database testing</p>
               <p>• API endpoint testing</p>
             </div>
           </div>
 
           <div class="card-solid">
-            <div class="card-icon card-icon-tertiary">
+            <!-- <div class="card-icon card-icon-tertiary">
               <i class="fas fa-shield-alt"></i>
-            </div>
+            </div> -->
             <h3 class="card-title-dark">Quality Gates</h3>
             <div class="card-text-dark">
               <p>• Code coverage</p>
-              <p>• ESLint integration</p>
               <p>• Type checking</p>
             </div>
           </div>
         </div>
 
-        <div class="code-example">
+        <div class="code-example" style="font-size: .9rem;">
           <pre><code class="language-typescript">describe('UserService', () => {
   let service: UserService;
   let mockRepository: Repository<User>;
@@ -1402,15 +1390,13 @@ export class OrderService {
         { provide: getRepositoryToken(User), useValue: mockRepository }
       ]
     }).compile();
-
     service = module.get<UserService>(UserService);
   });
 
   it('should create user', async () => {
     const result = await service.create(createUserDto);
-    expect(result).toBeDefined();
-  });
-});</code></pre>
+    expect(mockRepository.save).toHaveBeenCalledWith(createUserDto);
+  }); });</code></pre>
         </div>
       </div>
     </section>
@@ -1426,9 +1412,9 @@ export class OrderService {
         <!-- Company Image Display -->
         <div class="glass p-8 flex justify-center items-center">
           <img
-            src="presentation/images/who-uses-nestjs.png"
+            src="../images/who-uses-nestjs.png" 
             alt="Companies using NestJS"
-            class="max-w-full max-h-96 object-contain rounded-lg shadow-lg"
+            class="max-w-full max-h-120 object-contain rounded-lg shadow-lg"
             style="border: 2px solid rgba(234, 40, 69, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);"
           />
         </div>
@@ -1438,20 +1424,19 @@ export class OrderService {
     <!-- Slide 16: Key Takeaways & Next Steps -->
     <section class="slide" id="slide-16">
       <div class="slide-content">
-        <h2 class="slide-title">Key Takeaways & Next Steps</h2>
+        <h2 class="slide-title">FIN</h2>
         <p class="slide-subtitle">
           Your path to scalable Node.js architecture
         </p>
 
         <div class="content-grid grid-2">
           <div class="content-card">
-            <div class="card-icon card-icon-primary">
+            <!-- <div class="card-icon card-icon-primary">
               <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3 class="card-title">Key Takeaways</h3>
-            <div class="card-text">
-              <p>• NestJS provides enterprise-grade architecture patterns</p>
-              <p>• Scales from prototype to production seamlessly</p>
+            </div> -->
+            <h3 class="card-title text-3xl">Key Takeaways</h3>
+            <div class="card-text text-2xl">
+              <p>• NestJS provides enterprise-grade architecture</p>
               <p>• Rich ecosystem with modern tooling</p>
               <p>• Strong TypeScript support and testing capabilities</p>
               <p>• Clear migration path from monolith to microservices</p>
@@ -1459,16 +1444,15 @@ export class OrderService {
           </div>
 
           <div class="content-card">
-            <div class="card-icon card-icon-secondary">
+            <!-- <div class="card-icon card-icon-secondary">
               <i class="fas fa-rocket"></i>
-            </div>
-            <h3 class="card-title">Next Steps</h3>
-            <div class="card-text">
+            </div> -->
+            <h3 class="card-title  text-3xl">Next Steps</h3>
+            <div class="card-text text-2xl" > 
               <p>• Start with a simple NestJS project</p>
-              <p>• Implement dependency injection patterns</p>
-              <p>• Add comprehensive testing</p>
-              <p>• Plan your microservices architecture</p>
               <p>• Join the NestJS community</p>
+              <p>• Explore the Pollinator codebase</p>
+              <p>• Plan your microservices architecture</p>
             </div>
           </div>
         </div>
@@ -1483,9 +1467,33 @@ export class OrderService {
             Questions & Discussion
           </p>
           <div class="text-center animate__animated animate__fadeInUp animate__delay-5s">
-            <p class="text-lg text-white opacity-80">
-              🌐 nestjs.com | 📧 contact@thepollinator.dev | 🐦 @nestframework
+            <p class="text-xl text-white opacity-80">
+             Tyler Steck | 📧 steckdev@gmail.com | https://discord.com/invite/nestjs | 🌐 https://nestjs.com/
             </p>
+          </div>
+
+          <!-- Compact feedback section -->
+          <div class="mt-8 pt-6 border-t border-white/20 animate__animated animate__fadeInUp animate__delay-6s">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+              <div class="md:col-span-2 text-left">
+                <p class="text-2xl text-white font-semibold mb-2">
+                  <i class="fas fa-star text-yellow-400 mr-2"></i>Rate this session
+                </p>
+                <a id="review-link" href="https://devm.io/reader/player/international-javascript-new-york-2025/scaling-nodejs-applications-nextjs-architecture-performance"
+                   class="text-green-400 underline text-md hover:text-green-300 transition-colors">
+                  devm.io/reader/player/international-javascript-new-york-2025/scaling-nodejs-applications-nextjs-architecture-performance
+                </a>
+                <p class="text-sm text-white/60 mt-2">
+                  <i class="fas fa-gift text-red-400 mr-1"></i>
+                  Grab a 3D printed developer keychain w/ swappable pieces!
+                </p>
+              </div>
+              <div class="flex justify-center">
+                <div class="bg-white p-3 rounded-lg shadow-lg">
+                  <div id="review-qr" style="width: 120px; height: 120px;"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1661,6 +1669,35 @@ export class OrderService {
 
       document.addEventListener('mousemove', resetNavTimeout);
       document.addEventListener('keypress', resetNavTimeout);
+
+      // Build day-of review QR/link with simple override
+      (function initReviewQR() {
+        const params = new URLSearchParams(window.location.search);
+        const DEFAULT_REVIEW_URL = 'https://devm.io/reader/player/international-javascript-new-york-2025/scaling-nodejs-applications-nextjs-architecture-performance';
+        const url = params.get('reviewUrl') || DEFAULT_REVIEW_URL;
+
+        const linkEl = document.getElementById('review-link');
+        const qrEl = document.getElementById('review-qr');
+
+        if (linkEl) {
+          linkEl.href = url;
+          linkEl.textContent = url.replace(/^https?:\/\//, '');
+        }
+        if (qrEl && window.QRCode) {
+          const QR_SIZE = 120;
+          new QRCode(qrEl, {
+            text: url,
+            width: QR_SIZE,
+            height: QR_SIZE,
+            colorDark: '#1a1a1a',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+        }
+      })();
     </script>
+
+    <!-- QRCode generator library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   </body>
 </html>
