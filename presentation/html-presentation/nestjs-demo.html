@@ -540,6 +540,7 @@
           <a href="#slide-14" class="nav-dot" data-slide="14">14</a>
           <a href="#slide-15" class="nav-dot" data-slide="15">15</a>
           <a href="#slide-16" class="nav-dot" data-slide="16">16</a>
+          <a href="#slide-17" class="nav-dot" data-slide="17">17</a>
         </div>
       </div>
     </div>
@@ -749,9 +750,10 @@
 
         <div class="code-example">
           <pre><code class="language-typescript">@Controller('users')
-export class UsersController {
+export class UsersController {'
+  constructor(private readonly usersService: UsersService) {}
   @Get()
-  findAll(): User[] {
+  findAll(): Promise&lt;User[]&gt; {
     return this.usersService.findAll();
   }
 }</code></pre>
@@ -777,7 +779,7 @@ export class UsersController {
               <pre><code class="language-typescript">@Module({
   imports: [DatabaseModule],
   controllers: [ UsersController ],
-  providers: [ UsersService ]
+  providers: [ UsersService, UsersRepository ]
 })</code></pre>
             </div>
 
@@ -800,7 +802,7 @@ export class UsersController {
             </p>
             <div class="code-example">
               <pre><code class="language-typescript">@Controller('api')
-@Get() findAll()</code></pre>
+@Get() findAll() : Promise&lt;User[]&gt;</code></pre>
             </div>
             <h3 class="card-title-dark">Services</h3>
             <p class="card-text-dark">
@@ -815,144 +817,9 @@ class UserService</code></pre>
       </div>
     </section>
 
-    <!-- Slide 6: Scalability Patterns -->
+
+    <!-- Slide 6: Clean Architecture Patterns -->
     <section class="slide" id="slide-6">
-      <div class="slide-content">
-        <h2 class="slide-title">Scalability Patterns</h2>
-        <p class="slide-subtitle">Enterprise-Grade Architecture Solutions</p>
-
-        <div class="content-grid grid-4">
-          <div class="card-solid">
-            <div class="card-icon card-icon-primary">
-              <i class="fas fa-cubes"></i>
-            </div>
-            <h3 class="card-title-dark">Microservices</h3>
-            <div class="card-text-dark">
-              <p>• Service decomposition</p>
-              <p>• Independent deployment</p>
-              <p>• Fault isolation</p>
-            </div>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-secondary">
-              <i class="fas fa-expand-arrows-alt"></i>
-            </div>
-            <h3 class="card-title-dark">Distributed Processing</h3>
-            <div class="card-text-dark">
-              <p>• Queue Integration (Bull, Redis)</p>
-              <p>• Auto-scaling groups</p>
-              <p>• Scalable Workers</p>
-            </div>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-tertiary">
-              <i class="fas fa-database"></i>
-            </div>
-            <h3 class="card-title-dark">Caching Strategies</h3>
-            <div class="card-text-dark">
-              <p>• Multi-level caching</p>
-              <p>• Cache invalidation</p>
-              <p>• Redis integration</p>
-            </div>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-warning">
-              <i class="fas fa-tachometer-alt"></i>
-            </div>
-            <h3 class="card-title-dark">Performance Optimization</h3>
-            <div class="card-text-dark">
-              <p>• Connection pooling</p>
-              <p>• Query optimization</p>
-              <p>• Memory management</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-solid p-6 mt-8">
-          <p class="text-xl text-center text-black">
-            <i class="fas fa-rocket text-red-600 mx-3"></i>
-            Designed for growth and scalability from 1K to 1M+ users without rewrites
-            <i class="fas fa-rocket text-red-600 mx-3"></i>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 7: Rich Ecosystem & Integrations -->
-    <section class="slide" id="slide-7">
-      <div class="slide-content">
-        <h2 class="slide-title">Rich Ecosystem & Integrations</h2>
-        <p class="slide-subtitle">
-          Seamlessly connects with industry-leading tools and services
-        </p>
-
-        <div class="content-grid grid-3">
-
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-warning">
-              <i class="fas fa-cloud"></i>
-            </div>
-            <h3 class="card-title-dark">Cloud Services</h3>
-            <p class="card-text-dark">
-              AWS, Azure, GCP
-            </p>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-primary">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3 class="card-title-dark">Authentication</h3>
-            <p class="card-text-dark">JWT, Passport.js, OAuth integrations</p>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-quaternary">
-              <i class="fas fa-project-diagram"></i>
-            </div>
-            <h3 class="card-title-dark">Communication</h3>
-            <p class="card-text-dark">
-              Api, GraphQL, gRPC, OpenAPI, WebSocket
-            </p>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-secondary">
-              <i class="fas fa-database"></i>
-            </div>
-            <h3 class="card-title-dark">Data Persistence</h3>
-            <p class="card-text-dark">TypeORM, Prisma, Sequelize, Mongoose</p>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-tertiary">
-              <i class="fas fa-bolt"></i>
-            </div>
-            <h3 class="card-title-dark">Caching</h3>
-            <p class="card-text-dark">
-              Redis, In-Memory caching, Auto-cache responses
-            </p>
-          </div>
-
-          <div class="card-solid">
-            <div class="card-icon card-icon-accent">
-              <i class="fas fa-leaf"></i>
-            </div>
-            <h3 class="card-title-dark">Monitoring</h3>
-            <p class="card-text-dark">
-              OpenTelemetry, Terminus, Status Monitor, ELK Stack
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 8: Clean Architecture Patterns -->
-    <section class="slide" id="slide-8">
       <div class="slide-content">
         <h2 class="slide-title">Clean Architecture Patterns</h2>
         <p class="slide-subtitle">
@@ -1008,7 +875,7 @@ class UserService</code></pre>
 export class UserService implements IUserService {
   constructor(@Inject('USER_REPOSITORY') private userRepo: UserRepository) {}
 
-  async createUser(dto: CreateUserDto): Promise<User> {
+  async createUser(dto: CreateUserDto): Promise&lt;User&gt; {
     const user = new User(dto.name, dto.email);
     return await this.userRepo.save(user);
   }
@@ -1017,8 +884,77 @@ export class UserService implements IUserService {
       </div>
     </section>
 
-    <!-- Slide 9: Advanced Declarative Patterns -->
-    <section class="slide" id="slide-9">
+
+    <!-- Slide 7: Testing & Quality Assurance -->
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <h2 class="slide-title">Testing & Quality Assurance</h2>
+        <p class="slide-subtitle">
+          Built-in testing capabilities for reliable applications
+        </p>
+
+        <div class="content-grid grid-3">
+          <div class="card-solid">
+            <!-- <div class="card-icon card-icon-primary">
+              <i class="fas fa-vial"></i>
+            </div> -->
+            <h3 class="card-title-dark">Unit Testing</h3>
+            <div class="card-text-dark">
+              <p>• Dependency mocking</p>
+              <p>• Test utilities</p>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <!-- <div class="card-icon card-icon-secondary">
+              <i class="fas fa-puzzle-piece"></i>
+            </div> -->
+            <h3 class="card-title-dark">Integration Testing</h3>
+            <div class="card-text-dark">
+              <p>• Database testing</p>
+              <p>• API endpoint testing</p>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <!-- <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-shield-alt"></i>
+            </div> -->
+            <h3 class="card-title-dark">Quality Gates</h3>
+            <div class="card-text-dark">
+              <p>• Code coverage</p>
+              <p>• Type checking</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-example" style="font-size: 1.2rem;">
+          <pre><code class="language-typescript">describe('UserService', () => {
+  let service: UserService;
+  let mockRepository: IUserRepository = mock&lt;UserRepository&gt;();
+
+  beforeEach(async () => {
+    const module = await Test.createTestingModule({
+      providers: [
+        UserService,
+        { provide: 'USER_REPOSITORY', useValue: mockRepository }
+      ]
+    }).compile();
+    service = module.get&lt;UserService&gt;(UserService);
+  });
+
+  it('should create user', async () => {
+    const result = await service.create(createUserDto);
+    expect(mockRepository.save).toHaveBeenCalledWith(createUserDto);
+  }); });</code></pre>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Slide 8: Advanced Declarative Patterns -->
+    <section class="slide" id="slide-8">
       <div class="slide-content">
         <h2 class="slide-title">Advanced Declarative Patterns</h2>
         <p class="slide-subtitle">
@@ -1109,8 +1045,144 @@ export class UserService implements IUserService {
       </div>
     </section>
 
-    <!-- Slide 10: Vertical Scaling Strategies -->
+    <!-- Slide 9: Rich Ecosystem & Integrations -->
+    <section class="slide" id="slide-9">
+      <div class="slide-content">
+        <h2 class="slide-title">Rich Ecosystem & Integrations</h2>
+        <p class="slide-subtitle">
+          Seamlessly connects with industry-leading tools and services
+        </p>
+
+        <div class="content-grid grid-3">
+
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-warning">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3 class="card-title-dark">Cloud Services</h3>
+            <p class="card-text-dark">
+              AWS, Azure, GCP
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Authentication</h3>
+            <p class="card-text-dark">JWT, Passport.js, OAuth integrations</p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-quaternary">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+            <h3 class="card-title-dark">Communication</h3>
+            <p class="card-text-dark">
+              Api, GraphQL, gRPC, OpenAPI, WebSocket
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-database"></i>
+            </div>
+            <h3 class="card-title-dark">Data Persistence</h3>
+            <p class="card-text-dark">TypeORM, Prisma, Sequelize, Mongoose</p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="card-title-dark">Caching</h3>
+            <p class="card-text-dark">
+              Redis, In-Memory caching, Auto-cache responses
+            </p>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-accent">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3 class="card-title-dark">Monitoring</h3>
+            <p class="card-text-dark">
+              OpenTelemetry, Terminus, Status Monitor, ELK Stack
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Scalability Patterns -->
     <section class="slide" id="slide-10">
+      <div class="slide-content">
+        <h2 class="slide-title">Scalability Patterns</h2>
+        <p class="slide-subtitle">Enterprise-Grade Architecture Solutions</p>
+
+        <div class="content-grid grid-4">
+          <div class="card-solid">
+            <div class="card-icon card-icon-primary">
+              <i class="fas fa-cubes"></i>
+            </div>
+            <h3 class="card-title-dark">Microservices</h3>
+            <div class="card-text-dark">
+              <p>• Service decomposition</p>
+              <p>• Independent deployment</p>
+              <p>• Fault isolation</p>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-secondary">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Distributed Processing</h3>
+            <div class="card-text-dark">
+              <p>• Queue Integration (Bull, Redis)</p>
+              <p>• Auto-scaling groups</p>
+              <p>• Scalable Workers</p>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-tertiary">
+              <i class="fas fa-database"></i>
+            </div>
+            <h3 class="card-title-dark">Caching Strategies</h3>
+            <div class="card-text-dark">
+              <p>• Multi-level caching</p>
+              <p>• Cache invalidation</p>
+              <p>• Redis integration</p>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <div class="card-icon card-icon-warning">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3 class="card-title-dark">Performance Optimization</h3>
+            <div class="card-text-dark">
+              <p>• Connection pooling</p>
+              <p>• Query optimization</p>
+              <p>• Memory management</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-solid p-6 mt-8">
+          <p class="text-xl text-center text-black">
+            <i class="fas fa-rocket text-red-600 mx-3"></i>
+            Designed for growth and scalability from 1K to 1M+ users without rewrites
+            <i class="fas fa-rocket text-red-600 mx-3"></i>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: Vertical Scaling Strategies -->
+    <section class="slide" id="slide-11">
       <div class="slide-content">
         <h2 class="slide-title">Vertical Scaling Strategies</h2>
         <p class="slide-subtitle">
@@ -1162,8 +1234,8 @@ export class UserModule {}</code></pre>
       </div>
     </section>
 
-    <!-- Slide 11: Horizontal Scaling & Microservices -->
-    <section class="slide" id="slide-11">
+    <!-- Slide 12: Horizontal Scaling & Microservices -->
+    <section class="slide" id="slide-12">
       <div class="slide-content">
         <h2 class="slide-title">Horizontal Scaling & Microservices</h2>
         <p class="slide-subtitle">
@@ -1215,7 +1287,7 @@ export class OrderService {
     @Inject('PAYMENT_SERVICE') private paymentService: ClientProxy,
     @Inject('INVENTORY_SERVICE') private inventoryService: ClientProxy
   ) {}
-  async processOrder(order: CreateOrderDto) {
+  async processOrder(order: CreateOrderDto) : Promise&lt;Order&gt; {
     await this.inventoryService.emit('reserve_items', order.items);
     return this.paymentService.send('process_payment', order.payment);
 }}</code></pre>
@@ -1335,76 +1407,11 @@ export class OrderService {
       </div>
     </section> -->
 
-    <!-- Slide 14: Testing & Quality Assurance -->
-    <section class="slide" id="slide-14">
-      <div class="slide-content">
-        <h2 class="slide-title">Testing & Quality Assurance</h2>
-        <p class="slide-subtitle">
-          Built-in testing capabilities for reliable applications
-        </p>
-
-        <div class="content-grid grid-3">
-          <div class="card-solid">
-            <!-- <div class="card-icon card-icon-primary">
-              <i class="fas fa-vial"></i>
-            </div> -->
-            <h3 class="card-title-dark">Unit Testing</h3>
-            <div class="card-text-dark">
-              <p>• Dependency mocking</p>
-              <p>• Test utilities</p>
-            </div>
-          </div>
-
-          <div class="card-solid">
-            <!-- <div class="card-icon card-icon-secondary">
-              <i class="fas fa-puzzle-piece"></i>
-            </div> -->
-            <h3 class="card-title-dark">Integration Testing</h3>
-            <div class="card-text-dark">
-              <p>• Database testing</p>
-              <p>• API endpoint testing</p>
-            </div>
-          </div>
-
-          <div class="card-solid">
-            <!-- <div class="card-icon card-icon-tertiary">
-              <i class="fas fa-shield-alt"></i>
-            </div> -->
-            <h3 class="card-title-dark">Quality Gates</h3>
-            <div class="card-text-dark">
-              <p>• Code coverage</p>
-              <p>• Type checking</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="code-example" style="font-size: .9rem;">
-          <pre><code class="language-typescript">describe('UserService', () => {
-  let service: UserService;
-  let mockRepository: Repository<User>;
-
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [
-        UserService,
-        { provide: getRepositoryToken(User), useValue: mockRepository }
-      ]
-    }).compile();
-    service = module.get<UserService>(UserService);
-  });
-
-  it('should create user', async () => {
-    const result = await service.create(createUserDto);
-    expect(mockRepository.save).toHaveBeenCalledWith(createUserDto);
-  }); });</code></pre>
-        </div>
-      </div>
-    </section>
 
     <!-- Slide 15: Real-World Success Stories -->
     <section class="slide" id="slide-15">
       <div class="slide-content">
-        <h2 class="slide-title">Real-World Success Stories</h2>
+        <h2 class="slide-title">Real-World Success</h2>
         <p class="slide-subtitle">
           Companies scaling with NestJS
         </p>
@@ -1421,8 +1428,104 @@ export class OrderService {
       </div>
     </section>
 
-    <!-- Slide 16: Key Takeaways & Next Steps -->
+    <!-- Slide 16: Live Demo - NestJS in Action -->
     <section class="slide" id="slide-16">
+      <div class="slide-content">
+        <h2 class="slide-title">Live Demo: NestJS in Action</h2>
+        <p class="slide-subtitle">
+          From Basic API to Production-Ready Architecture in 40 Minutes
+        </p>
+
+        <div class="content-grid grid-2">
+          <!-- Demo Flow Timeline -->
+          <div class="content-card">
+            <h3 class="card-title">Demo Examples</h3>
+            <div class="card-text">
+             <p>• Current Architecture</p>
+             <p>• Global ValidationPipe</p>
+             <p>• JWT Auth Guards</p>
+             <p>• Logging Interceptors</p>
+             <p>• Caching Strategy</p>
+             <p>• Custom Decorators</p>
+             <p>• DI Provider Factory</p>
+             <p>• Recap & Scale Path</p>
+            </div>
+          </div>
+
+          <!-- Key Transformations -->
+          <div class="content-card">
+            <h3 class="card-title">Key Transformations</h3>
+            <div class="card-text">
+              <p>• <strong>Validation:</strong> DTO + class-validator</p>
+              <p>• <strong>Security:</strong> JWT guards on routes</p>
+              <p>• <strong>Observability:</strong> Request/response logging</p>
+              <p>• <strong>Performance:</strong> Weather API caching</p>
+              <p>• <strong>Clean Code:</strong> @User() decorator</p>
+              <p>• <strong>Testability:</strong> DI-based providers</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Examples Preview -->
+        <div class="content-grid grid-3 mt-8">
+          <div class="card-solid">
+            <h4 class="card-title-dark text-sm">Before: Manual Validation</h4>
+            <div class="code-example text-xs">
+              <pre><code class="language-typescript">@Post()
+createUser(@Body() body: any) : Promise&lt;User&gt; {
+  if (!body.email) throw new Error();
+  return this.service.create(body);
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <h4 class="card-title-dark text-sm">After: Declarative Pipes</h4>
+            <div class="code-example text-xs">
+              <pre><code class="language-typescript">@Post()
+createUser(@Body() dto: CreateUserDto) : Promise&lt;User&gt; {
+  return this.service.create(dto);
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="card-solid">
+            <h4 class="card-title-dark text-sm">Enhanced: Guards + Decorators</h4>
+            <div class="code-example text-xs">
+              <pre><code class="language-typescript">@UseGuards(JwtAuthGuard)
+@Get('profile')
+getProfile(@User() user: UserEntity) : Promise&lt;User&gt; {
+  return this.service.findById(user.id);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Outcomes -->
+        <div class="card-solid p-6 mt-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div>
+              <i class="fas fa-shield-alt text-3xl text-blue-400 mb-2"></i>
+              <h4 class="font-semibold text-gray-700">Security Hardened</h4>
+              <p class="text-sm text-gray-600">JWT auth + validation</p>
+            </div>
+            <div>
+              <i class="fas fa-tachometer-alt text-3xl text-green-400 mb-2"></i>
+              <h4 class="font-semibold text-gray-700">Performance Optimized</h4>
+              <p class="text-sm text-gray-600">Caching + interceptors</p>
+            </div>
+            <div>
+              <i class="fas fa-cogs text-3xl text-purple-400 mb-2"></i>
+              <h4 class="font-semibold text-gray-700">Production Ready</h4>
+              <p class="text-sm text-gray-600">Testable + maintainable</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 17: Key Takeaways & Next Steps -->
+    <section class="slide" id="slide-17">
       <div class="slide-content">
         <h2 class="slide-title">FIN</h2>
         <p class="slide-subtitle">
@@ -1501,7 +1604,7 @@ export class OrderService {
 
     <script>
       let currentSlide = 1;
-      const totalSlides = 16;
+      const totalSlides = 17;
 
       function showSlide(n) {
         const slides = document.querySelectorAll('.slide');
