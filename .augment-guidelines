@@ -1,0 +1,223 @@
+# Augment AI Guidelines for NestJS Workshop & Demo
+
+## Project Context
+This is a NestJS workshop and presentation project for the International JavaScript Conference NYC 2025. The project demonstrates scalable Node.js architecture patterns using NestJS framework.
+
+## Code Style & Standards
+
+### TypeScript Standards
+- Use strict TypeScript with proper type annotations
+- Prefer interfaces over types for object shapes
+- Use explicit return types for public methods
+- Enable strict null checks and proper error handling
+- Use meaningful variable and function names
+
+### NestJS Patterns
+- Follow NestJS architectural patterns (modules, controllers, services, guards, interceptors, pipes)
+- Use dependency injection consistently
+- Implement proper error handling with NestJS exception filters
+- Use decorators appropriately (@Injectable, @Controller, @Get, etc.)
+- Follow the single responsibility principle for each component
+
+### File Organization
+```
+Workshop/
+├── 01-current/          # Starting point - basic implementation
+├── 02-enhanced/         # Demo targets - production-ready patterns
+├── 03-product/          # Advanced features
+└── 04-platform/         # Enterprise patterns
+```
+
+## Demo-Specific Requirements
+
+### Live Coding Guidelines
+- Code should be readable during presentation (clear variable names, good spacing)
+- Include inline comments explaining NestJS concepts for audience
+- Use demo-friendly data (avoid real credentials, use "demo-" prefixes)
+- Implement progressive enhancement (each step builds on previous)
+- Keep methods focused and testable
+
+### Error Handling
+- Use NestJS built-in exceptions (UnauthorizedException, BadRequestException, etc.)
+- Provide meaningful error messages for demo purposes
+- Include proper logging for demonstration
+- Handle edge cases gracefully
+
+### Security Patterns
+- Implement JWT authentication patterns (even if simplified for demo)
+- Show validation using class-validator and DTOs
+- Demonstrate guard usage for route protection
+- Use environment variables for configuration
+
+## Implementation Priorities
+
+### 1. Core NestJS Concepts (High Priority)
+- Dependency Injection
+- Module system
+- Controllers and Services
+- Guards, Interceptors, Pipes
+- Custom Decorators
+
+### 2. Production Patterns (Medium Priority)
+- Logging and monitoring
+- Error handling
+- Validation
+- Caching strategies
+- Configuration management
+
+### 3. Advanced Features (Lower Priority)
+- Microservices patterns
+- Database integration
+- Testing strategies
+- Performance optimization
+
+## Code Examples Format
+
+### Controller Example
+```typescript
+@Controller('users')
+@UseGuards(JwtAuthGuard)
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get('profile')
+  async getProfile(@User() user: UserEntity): Promise<UserEntity> {
+    return this.usersService.findById(user.id);
+  }
+}
+```
+
+### Service Example
+```typescript
+@Injectable()
+export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
+  async findById(id: string): Promise<UserEntity> {
+    this.logger.debug(`Finding user with ID: ${id}`);
+    // Implementation here
+  }
+}
+```
+
+## Demo Flow Considerations
+
+### Timeline Management
+- Each demo segment should be 5-6 minutes max
+- Have backup plans if running behind schedule
+- Prioritize core concepts over advanced features
+- Keep audience engaged with practical examples
+
+### Audience Engagement
+- Explain the "why" behind each pattern
+- Show before/after comparisons
+- Highlight scalability benefits
+- Connect to real-world scenarios
+
+## Testing Guidelines
+
+### Unit Testing
+- Use Jest as the testing framework
+- Mock dependencies properly
+- Test business logic, not framework code
+- Include both positive and negative test cases
+
+### Integration Testing
+- Test API endpoints end-to-end
+- Verify guard and interceptor behavior
+- Test error scenarios
+- Use test databases for data operations
+
+## Documentation Standards
+
+### Code Comments
+- Explain NestJS-specific concepts for newcomers
+- Document complex business logic
+- Include usage examples for decorators and utilities
+- Avoid obvious comments
+
+### README Files
+- Include setup instructions
+- Explain the demo flow
+- Provide troubleshooting tips
+- Link to relevant NestJS documentation
+
+## Performance Considerations
+
+### Scalability Patterns
+- Implement caching where appropriate
+- Use async/await consistently
+- Optimize database queries
+- Consider memory usage in demos
+
+### Monitoring
+- Include logging for demo visibility
+- Show performance metrics
+- Demonstrate health checks
+- Include request tracing
+
+## Security Best Practices
+
+### Authentication & Authorization
+- Use proper JWT validation (even if simplified)
+- Implement role-based access control
+- Validate all inputs
+- Sanitize outputs
+
+### Data Protection
+- Never commit real credentials
+- Use environment variables
+- Implement proper error messages (don't leak sensitive info)
+- Follow OWASP guidelines
+
+## AI Assistant Instructions
+
+### When Generating Code
+1. Always include proper TypeScript types
+2. Add meaningful comments for demo purposes
+3. Use NestJS best practices consistently
+4. Include error handling
+5. Make code presentation-friendly
+
+### When Explaining Concepts
+1. Start with the business problem
+2. Show the NestJS solution
+3. Explain the benefits
+4. Provide practical examples
+5. Connect to scalability concerns
+
+### When Debugging
+1. Check NestJS module imports
+2. Verify decorator usage
+3. Ensure proper dependency injection
+4. Check for circular dependencies
+5. Validate configuration
+
+## Common Patterns to Follow
+
+### Module Structure
+```typescript
+@Module({
+  imports: [ConfigModule, DatabaseModule],
+  controllers: [UsersController],
+  providers: [UsersService, UsersRepository],
+  exports: [UsersService]
+})
+export class UsersModule {}
+```
+
+### Error Response Format
+```typescript
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "User input validation failed",
+    "details": ["Email is required", "Password too short"]
+  },
+  "timestamp": "2025-01-XX",
+  "path": "/api/users"
+}
+```
+
+This file ensures consistent, high-quality code generation and assistance throughout the workshop development and presentation.
