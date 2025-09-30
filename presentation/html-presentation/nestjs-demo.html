@@ -350,7 +350,7 @@
       }
 
       .card-title {
-        font-size: 1.25rem;
+        font-size: 2.75rem;
         font-weight: 600;
         color: white;
         margin-bottom: 0.5rem;
@@ -358,6 +358,7 @@
 
       .card-text {
         color: rgba(255, 255, 255, 0.8);
+        font-size: 1.6rem;
         line-height: 1.6;
         text-align: left;
       }
@@ -1018,7 +1019,7 @@ export class UserService implements IUserService {
         <div class="content-grid grid-2">
           <!-- Demo Flow Timeline -->
           <div class="content-card">
-            <h3 class="card-title">Demo Examples</h3>
+            <h2 class="card-title">Demo Examples</h2>
             <div class="card-text">
              <p>• Current Architecture</p>
              <p>• Global ValidationPipe</p>
@@ -1048,19 +1049,8 @@ export class UserService implements IUserService {
         <!-- Code Examples Preview -->
         <div class="content-grid grid-3 mt-8">
           <div class="card-solid">
-            <h4 class="card-title-dark text-sm">Before: Manual Validation</h4>
-            <div class="code-example text-xs">
-              <pre><code class="language-typescript">@Post()
-createUser(@Body() body: any) : Promise&lt;User&gt; {
-  if (!body.email) throw new Error();
-  return this.service.create(body);
-}</code></pre>
-            </div>
-          </div>
-
-          <div class="card-solid">
             <h4 class="card-title-dark text-sm">After: Declarative Pipes</h4>
-            <div class="code-example text-xs">
+            <div class="code-example text-xl">
               <pre><code class="language-typescript">@Post()
 createUser(@Body() dto: CreateUserDto) : Promise&lt;User&gt; {
   return this.service.create(dto);
@@ -1070,7 +1060,7 @@ createUser(@Body() dto: CreateUserDto) : Promise&lt;User&gt; {
 
           <div class="card-solid">
             <h4 class="card-title-dark text-sm">Enhanced: Guards + Decorators</h4>
-            <div class="code-example text-xs">
+            <div class="code-example text-xl">
               <pre><code class="language-typescript">@UseGuards(JwtAuthGuard)
 @Get('profile')
 getProfile(@User() user: UserEntity) : Promise&lt;User&gt; {
@@ -1080,26 +1070,6 @@ getProfile(@User() user: UserEntity) : Promise&lt;User&gt; {
           </div>
         </div>
 
-        <!-- Demo Outcomes -->
-        <div class="card-solid p-6 mt-8">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div>
-              <i class="fas fa-shield-alt text-3xl text-blue-400 mb-2"></i>
-              <h4 class="font-semibold text-gray-700">Security Hardened</h4>
-              <p class="text-sm text-gray-600">JWT auth + validation</p>
-            </div>
-            <div>
-              <i class="fas fa-tachometer-alt text-3xl text-green-400 mb-2"></i>
-              <h4 class="font-semibold text-gray-700">Performance Optimized</h4>
-              <p class="text-sm text-gray-600">Caching + interceptors</p>
-            </div>
-            <div>
-              <i class="fas fa-cogs text-3xl text-purple-400 mb-2"></i>
-              <h4 class="font-semibold text-gray-700">Production Ready</h4>
-              <p class="text-sm text-gray-600">Testable + maintainable</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1338,7 +1308,7 @@ export class UserModule {}</code></pre>
           </div>
         </div>
 
-        <div class="code-example-small">
+        <div class="code-example">
           <pre><code class="language-typescript">@Injectable()
 export class OrderService {
   constructor(
